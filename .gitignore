@@ -34,3 +34,6 @@
 /config/*.key
 
 docker_secrets/
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

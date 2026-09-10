@@ -1,0 +1,77 @@
+<div class="bg-white px-4 py-8 mt-8 rounded">
+  <div class="flex justify-between">
+    <h2 class="text-2xl font-bold mb-8">テスト結果一覧</h2>
+    <p>テスト件数</p>
+  </div>
+  <div class="flex flex-col gap-1 mb-8">
+    <label for="app-or-file-name">アプリ名・ファイル名</label>
+    <input type="text" name="" id="app-or-file-name" placeholder="アプリ名・ファイル名" class="border border-gray-300 rounded-xl p-2">
+  </div>
+  <div class="flex flex-wrap items-end gap-4 mb-12">
+    <div class="flex flex-col gap-1">
+      <label for="measured-from">計測日（開始）</label>
+      <input type="date" name="" id="measured-from" placeholder="年/月/日" class="border border-gray-300 rounded-xl p-2">
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="measured-to">計測日（終了）</label>
+      <input type="date" name="" id="measured-to" placeholder="年/月/日" class="border border-gray-300 rounded-xl p-2">
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="cpi-from">CPI（以上）</label>
+      <input type="number" name="" id="cpi-from" placeholder="円以上" class="border border-gray-300 rounded-xl p-2 max-w-30">
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="cpi-to">CPI（以下）</label>
+      <input type="number" name="" id="cpi-to" placeholder="円以下" class="border border-gray-300 rounded-xl p-2 max-w-30">
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="ctr-from">CTR（以上）</label>
+      <input type="number" name="" id="ctr-from" placeholder="%以上" class="border border-gray-300 rounded-xl p-2 max-w-30">
+    </div>
+    <div class="flex flex-col gap-1">
+      <label for="status">状態</label>
+      <select name="" id="status" class="border border-gray-300 rounded-xl p-2">
+        <option value="全て">全て</option>
+        <option value="結果取り込み済み">結果取り込み済み</option>
+        <option value="結果待ち">結果待ち</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid gap-4">
+    <table>
+      <thead>
+        <tr class="text-left border-b border-gray-300">
+          <th class="pb-2 px-2">アプリ</th>
+          <th class="pb-2 px-2">動画</th>
+          <th class="pb-2 px-2">計測日</th>
+          <th class="pb-2 px-2">CPI</th>
+          <th class="pb-2 px-2">CTR</th>
+          <th class="pb-2 px-2">CVR</th>
+          <th class="pb-2 px-2">仮説</th>
+          <th class="pb-2 px-2">状態</th>
+          <th class="pb-2 px-2">imp</th>
+          <th class="pb-2 px-2">予算</th>
+          <th class="pb-2 px-2">消化金額</th>
+          <th class="pb-2 px-2">振り返り</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="border-b border-gray-300">
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+          <td class="py-4 px-2">テスト</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

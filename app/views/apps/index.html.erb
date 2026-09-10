@@ -1,0 +1,14 @@
+<div class="bg-cyan-100 min-h-screen">
+  <div class="mx-auto max-w-6xl">
+    <h1 class="text-4xl font-bold mb-2 pt-8">アプリ選択</h1>
+    <p class="mb-8">アプリごとに仮説・テスト・広告結果・振り返りを管理しています。広告結果を改善したいアプリを選び、詳しい検証を始めてください。</p>
+    <div class="bg-white p-8">
+      <h2 class="text-xl font-bold">アプリ一覧</h2>
+      <input type="text", placeholder = "アプリ名を検索", class="border border-gray-300 rounded-xl p-2 my-3 min-w-md">
+      <div class="grid grid-cols-4 gap-4 mb-4">
+        <%= render "shared/app_card" %>
+      </div>
+      <%= link_to "+ 管理するアプリを登録","#", class: "text-blue-500 text-sm" %>
+    </div>
+  </div>
+</div>
