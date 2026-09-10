@@ -1,21 +1,25 @@
 <div class="bg-cyan-100 min-h-screen">
-  <div class="mx-auto max-w-6xl">
-    <h1 class="text-3xl font-bold pt-8">アプリ名</h1>
-    <div class="flex justify-between items-center">
-      <div>
-        <p>キャンペーン</p>
-        <p>アプリ詳細</p>
-      </div>
-      <div class="flex flex-col bg-white border border-gray-300 rounded-xl p-4">
-        <p class="text-gray-500 text-sm">最安CPI</p>
-        <p class="text-2xl">100円</p>
-      </div>
+  <div class="flex">
+    <div class="mx-4 pt-8 max-w-xl">
+      <%= render "shared/side_bar" %>
     </div>
-    <div class="flex gap-2">
-      <button class="bg-blue-500 py-2 px-4 rounded-xl text-white font-bold cursor-pointer">csvを取り込む</button>
-      <button class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300">+ 仮説を追加</button>
+    <div class="mx-auto max-w-6xl">
+      <h1 class="text-3xl font-bold pt-8">アプリ名</h1>
+      <div class="flex justify-between items-center">
+        <div>
+          <p>キャンペーン</p>
+          <p>アプリ詳細</p>
+        </div>
+        <div class="flex flex-col bg-white border border-gray-300 rounded-xl p-4">
+          <p class="text-gray-500 text-sm">最安CPI</p>
+          <p class="text-2xl">100円</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button class="bg-blue-500 py-2 px-4 rounded-xl text-white font-bold cursor-pointer">csvを取り込む</button>
+        <button class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300">+ 仮説を追加</button>
+      </div>
+      <%= render "shared/test_index" %>
     </div>
-    <%= render "shared/test_index" %>
   </div>
-
 </div>
