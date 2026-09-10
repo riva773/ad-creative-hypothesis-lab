@@ -19,7 +19,16 @@
   </head>
 
   <body>
-    <%= render "shared/header" %>
-    <%= yield %>
+    <div class="bg-cyan-100 min-h-screen">
+      <% if user_signed_in? %>
+        <%= render "shared/login_header" %>
+      <% else %>
+        <%= render "shared/header" %>
+      <% end %>
+      <% if flash[:notice] %>
+        <%= flash[:notice] %>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
