@@ -1,5 +1,12 @@
 <header>
-  <div class="bg-black h-24">
-    <h1>テストヘッダー</h1>
+  <div class="bg-black h-24 flex justify-between items-center px-14">
+    <div class="flex items-center ">
+      <%= image_tag "logo.png", class: "w-30 h-30" %>
+      <span class="text-white text-xl">Ad Creative Hypothesis Lab</span>
+    </div>
+    <div class="flex gap-4">
+      <%= link_to "広告結果一覧", "#", class: "text-white" %>
+      <%= link_to "アプリ一覧", "#", class: "text-white" %>
+    </div>
   </div>
 </header>
