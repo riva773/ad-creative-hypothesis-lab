@@ -5,7 +5,6 @@ class CreateApps < ActiveRecord::Migration[8.1]
       t.text :explanation
       t.references :user, null: false
       t.timestamps
-
     end
   end
 end
