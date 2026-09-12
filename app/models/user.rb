@@ -5,4 +5,6 @@ class User < ApplicationRecord
 
   validates :name, :role, presence: true
   validates :role, inclusion: { in: %w[ admin user ] }
+
+  has_many :apps
 end

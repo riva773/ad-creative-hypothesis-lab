@@ -1,12 +1,41 @@
 <div class="mx-auto max-w-6xl">
   <h1 class="text-4xl font-bold mb-2 pt-8">アプリ選択</h1>
   <p class="mb-8">アプリごとに仮説・テスト・広告結果・振り返りを管理しています。広告結果を改善したいアプリを選び、詳しい検証を始めてください。</p>
-  <div class="bg-white p-8">
-    <h2 class="text-xl font-bold">アプリ一覧</h2>
-    <input type="text", placeholder = "アプリ名を検索", class="border border-gray-300 rounded-xl p-2 my-3 min-w-md">
-    <div class="grid grid-cols-4 gap-4 mb-4">
-      <%= render "shared/app_card" %>
+  <div class="bg-white p-8 pb-8">
+    <h2 class="text-xl font-bold mb-1">アプリ一覧</h2>
+    <div class="flex flex-col gap-4 sm:flex-row items-center sm:justify-between mb-6">
+      <%= form_with model: @app, method: :get, class: "flex w-full flex-wrap items-center gap-2" do |f| %>
+        <%= f.text_field :search, placeholder: "アプリ名を検索", class: "min-w-sm rounded-xl border border-gray-300 p-2.5 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100" %>
+        <%= f.submit "検索", class: "cursor-pointer rounded-xl bg-cyan-500 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-cyan-600" %>
+        <%= link_to "リセット", apps_path, class: "rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-center text-sm font-bold text-gray-600 transition hover:bg-gray-50" %>
+      <% end %>
+      <div data-controller="app" class="shrink-0">
+        <button data-action="click->app#open" class="text-blue-500 text-md cursor-pointer">アプリを登録</button>
+        <div data-app-target="modal" class="hidden fixed justify-center items-center z-50 inset-0 bg-black/50" data-action="click->app#closeOnBackdrop">
+          <div class="bg-white p-8 rounded-xl min-w-md">
+            <%= form_with model: @app do |f| %>
+              <div class="flex flex-col">
+                <h1 class="text-2xl font-bold mb-4">アプリを追加</h1>
+                <%= f.label :avatar, "アプリアイコン" %>
+                <%= f.file_field :avatar, accept: "image/png, image_jpeg", class: " cursor-pointer border border-gray-300 rounded mb-2 text-gray-700 file:bg-cyan-50 file:mr-3 file:px-3 file:py-2 file:text-sm file:text-cyan-700 file:font-bold file:cursor-pointer hover:file:bg-cyan-100" %>
+                <%= f.label :name, "アプリ名" %>
+                <%= f.text_field :name, class: "border border-gray-300 rounded p-2 mb-2" %>
+                <%= f.label :explanation, "アプリ説明文" %>
+                <%= f.text_area :explanation, class: "border border-gray-300 rounded p-2 h-32" %>
+                <div class="mt-4 flex justify-end gap-4">
+                  <button type="button" data-action="click->app#close" class="cursor-pointer border border-gray-300 rounded p-2">閉じる</button>
+                  <%= f.submit "アプリを追加", class: "bg-cyan-300 text-white font-bold rounded p-2 cursor-pointer" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
     </div>
-    <%= link_to "+ 管理するアプリを登録","#", class: "text-blue-500 text-sm" %>
+    <div class="grid grid-cols-4 gap-4 mb-4">
+      <% @apps.each do |app| %>
+        <%= render "shared/app_card", app: app %>
+      <% end %>
+    </div>
   </div>
 </div>
