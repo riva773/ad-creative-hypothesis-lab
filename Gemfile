@@ -71,6 +71,6 @@ gem "devise", "~> 5.0"
 
 gem "json", "< 3"
 
-gem 'rails-i18n', '>= 8.1'
+gem "rails-i18n", ">= 8.1"
 
-gem 'devise-i18n', '>= 1.16'
+gem "devise-i18n", ">= 1.16"

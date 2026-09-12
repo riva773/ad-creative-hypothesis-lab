@@ -4,6 +4,5 @@ class AdTestsController < ApplicationController
   end
 
   def results
-
   end
 end
