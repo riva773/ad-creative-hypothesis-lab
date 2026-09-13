@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :apps
   resources :hypotheses, only: [ :create, :edit, :update, :destroy ]
   resources :ads, only: [ :create ]
+  resources :ad_tests, only: [ :create, :update, :destroy ]
   get "ad_tests/results", to: "ad_tests#results"
   get "up" => "rails/health#show", as: :rails_health_check
 end

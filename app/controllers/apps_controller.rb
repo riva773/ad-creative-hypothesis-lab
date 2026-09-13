@@ -55,6 +55,6 @@ class AppsController < ApplicationController
   end
 
   def app_params
-    params.require(:app).permit(:name, :explanation, :avatar)
+    params.require(:app).permit(:name, :explanation, :avatar, :campaign_name)
   end
 end

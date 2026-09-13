@@ -20,6 +20,8 @@
                 <%= f.file_field :avatar, accept: "image/png, image_jpeg", class: " cursor-pointer border border-gray-300 rounded mb-2 text-gray-700 file:bg-cyan-50 file:mr-3 file:px-3 file:py-2 file:text-sm file:text-cyan-700 file:font-bold file:cursor-pointer hover:file:bg-cyan-100" %>
                 <%= f.label :name, "アプリ名" %>
                 <%= f.text_field :name, class: "border border-gray-300 rounded p-2 mb-2" %>
+                <%= f.label :campaign_name, "キャンペーン名" %>
+                <%= f.text_field :campaign_name, class: "border border-gray-300 rounded p-2 mb-2" %>
                 <%= f.label :explanation, "アプリ説明文" %>
                 <%= f.text_area :explanation, class: "border border-gray-300 rounded p-2 h-32" %>
                 <div class="mt-4 flex justify-end gap-4">
