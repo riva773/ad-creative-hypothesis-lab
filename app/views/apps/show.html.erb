@@ -11,7 +11,7 @@
         </div>
         <div class="flex flex-col bg-white border border-gray-300 rounded-xl p-4">
           <p class="text-gray-500 text-sm">最安CPI</p>
-          <p class="text-2xl">100円</p>
+          <p class="text-2xl"><%= @ad_tests.minimum(:cpi) %></p>
         </div>
     </div>
       <div class="flex gap-2">

@@ -17,16 +17,16 @@ class AdTestsController < ApplicationController
         next
       end
       ad_test = AdTest.new(
-        status: row['status'],
-        test_start_date: row['test_start_date'],
-        test_end_date: row['test_end_date'],
-        cpi: row['cpi'],
-        cpm: row['cpm'],
-        ctr: row['ctr'],
-        cvr: row['cvr'],
-        impression: row['impression'],
-        budget: row['budget'],
-        amount_spent: row['amount_spent'],
+        status: row["status"],
+        test_start_date: row["test_start_date"],
+        test_end_date: row["test_end_date"],
+        cpi: row["cpi"],
+        cpm: row["cpm"],
+        ctr: row["ctr"],
+        cvr: row["cvr"],
+        impression: row["impression"],
+        budget: row["budget"],
+        amount_spent: row["amount_spent"],
         network: params[:ad_test][:network],
         ad_id: ad.id
       )
