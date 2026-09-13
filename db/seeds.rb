@@ -20,7 +20,7 @@ ad = Ad.create!(
   file_name: "サンプルファイル名"
 )
 
-10.times do|i|
+10.times do |i|
   AdTest.create!(
     ad_id: "#{ad.id}",
     network: "Meta",
@@ -32,7 +32,7 @@ ad = Ad.create!(
     budget: 5000,
     amount_spent: 3200,
     status: "結果取り込み済み",
-    test_start_date: Date.new(2026,6,2),
-    test_end_date: Date.new(2026,6,4)
+    test_start_date: Date.new(2026, 6, 2),
+    test_end_date: Date.new(2026, 6, 4)
   )
 end

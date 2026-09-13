@@ -4,5 +4,4 @@ class Ad < ApplicationRecord
   belongs_to :user
   belongs_to :hypothesis
   has_one_attached :creative
-
 end

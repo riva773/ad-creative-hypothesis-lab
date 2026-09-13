@@ -6,7 +6,6 @@ class AdsController < ApplicationController
     else
       render "apps/show", status: :unprocessable_entity
     end
-
   end
 
   def ad_params
