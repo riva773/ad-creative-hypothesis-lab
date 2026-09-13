@@ -7,4 +7,6 @@ class User < ApplicationRecord
   validates :role, inclusion: { in: %w[ admin user ] }
 
   has_many :apps
+  has_many :ads
+  has_many :hypotheses
 end

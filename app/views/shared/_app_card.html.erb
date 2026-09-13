@@ -1,5 +1,5 @@
 <div class="border border-gray-300 rounded-xl col-span-1 pb-4">
-  <%= link_to app_path(app) do %>
+  <%= link_to app do %>
     <div class="w-full aspect-square overflow-hidden rounded-xl" >
       <% if app.avatar.attached? %>
         <%= image_tag app.avatar, class: "pb-2 rounded object-cover w-full h-full", alt: "アプリアイコン" %>
