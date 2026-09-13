@@ -1,4 +1,7 @@
 ja:
+  date:
+    formats:
+      default: "%Y/%m/%d"
   activerecord:
     models:
       user: "ユーザー"
@@ -7,6 +10,10 @@ ja:
         name: "ユーザー名"
         email: "メールアドレス"
         password: "パスワード"
+      hypothesis:
+        content: "仮説内容"
+      ads:
+        creative: "ファイル"
   views:
     users:
       index:

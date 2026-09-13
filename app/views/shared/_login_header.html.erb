@@ -6,7 +6,7 @@
     </div>
     <div class="flex gap-4">
       <%= link_to "広告結果一覧", "#", class: "text-white" %>
-      <%= link_to "アプリ一覧", "#", class: "text-white" %>
+      <%= link_to "アプリ一覧", apps_path, class: "text-white" %>
       <%= link_to "ログアウト", destroy_user_session_path , class: "text-white", data: { turbo_method: :delete, confirm: "ログアウトしますか？" } %>
     </div>
   </div>

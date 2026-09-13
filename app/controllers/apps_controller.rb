@@ -10,6 +10,13 @@ class AppsController < ApplicationController
 
   def show
     @app = App.find(params[:id])
+    @ad_tests = @app.ad_tests
+    @hypotheses = @app.hypotheses.where(user_id: current_user.id)
+    @hypothesis = Hypothesis.new
+    @ad = Ad.new
+    @untestedHypotheses = @hypotheses.select do |hypothesis|
+      hypothesis.ad.blank?
+    end
   end
 
   def new

@@ -1,0 +1,107 @@
+<div class="flex">
+  <div class="mx-4 pt-8 max-w-xl">
+    <%= render "shared/side_bar" %>
+  </div>
+  <div class="mx-auto max-w-6xl">
+    <h1 class="text-3xl font-bold pt-8"><%= @app.name %></h1>
+    <div class="flex justify-between items-center">
+        <div>
+          <p>キャンペーン</p>
+          <p><%= @app.explanation %></p>
+        </div>
+        <div class="flex flex-col bg-white border border-gray-300 rounded-xl p-4">
+          <p class="text-gray-500 text-sm">最安CPI</p>
+          <p class="text-2xl">100円</p>
+        </div>
+    </div>
+      <div class="flex gap-2">
+        <div data-controller="hypothesis ad-upload hypothesis-management">
+          <button data-action="click->hypothesis#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300">+ 仮説を追加</button>
+          <button data-action="click->ad-upload#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300" >+ 広告をアップロード</button>
+          <button data-action="click->hypothesis-management#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300" >仮説を管理</button>
+          <div data-hypothesis-target="modal"  class="fixed bg-black/50 inset-0 justify-center items-center hidden z-50" data-action="click@window->hypothesis#closeOutside">
+            <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
+              <h1 class="text-2xl mb-2">仮説を追加</h1>
+              <%= form_with model: @hypothesis, class: "flex flex-col" do |f| %>
+                <%= f.hidden_field :app_id, value: @app.id %>
+                <%= f.label :content, class: "font-bold text-sm" %>
+                <%= f.text_area :content, class: "border border-gray-300 p-2 h-24 outline-none focus:border-cyan-500 focus:ring-2  focus:ring-cyan-100" %>
+                <div class="mt-6 flex items-center justify-end gap-3">
+                  <%= link_to "キャンセル", @app, class: "rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-bold text-gray-600 transition hover:bg-gray-50" %>
+                  <%= f.submit "追加", class: "cursor-pointer rounded-lg bg-cyan-500 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-cyan-600" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div data-ad-upload-target="modal" data-action="click@window->ad-upload#closeOutside" class="fixed bg-black/50 inset-0 hidden justify-center items-center z-50">
+            <div class="w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl ring-1 ring-black/5">
+              <div class="mb-8">
+                <h1 class="text-2xl font-bold tracking-tight text-gray-900">テスト記録を追加</h1>
+                <p class="mt-2 text-sm leading-6 text-gray-500">
+                  仮説を選択して、検証する広告動画をアップロードしてください。
+                </p>
+              </div>
+              <%= form_with model: @ad, class: "space-y-6" do |f| %>
+                <%= f.hidden_field :app_id %>
+                <div class="space-y-2">
+                  <%= f.label :hypothesis, "対象の仮説", class: "block text-sm font-semibold text-gray-700" %>
+                  <select name="hypothesis" class="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100">
+                    <%= @hypotheses.each do |hypothesis| %>
+                      <option value="#{hypothesis.id}"><%= hypothesis.content %></option>
+                    <% end %>
+                  </select>
+                </div>
+                <div class="space-y-2">
+                  <%= f.label :creative, "広告動画", class: "block text-sm font-semibold text-gray-700" %>
+                  <%= f.file_field :creative, class: "block w-full cursor-pointer rounded-xl border border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500 transition file:mr-4 file:cursor-pointer file:border-0 file:bg-cyan-50 file:px-4 file:py-3 file:font-semibold file:text-cyan-700 hover:border-cyan-400 hover:bg-cyan-50/40", accept: "video/mp4, image/png, image/jpeg"  %>
+                  <p class="text-xs text-gray-400">検証対象となる動画ファイルを選択してください。</p>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 border-t border-gray-100 pt-6">
+                  <%= link_to "キャンセル", @app, class: "rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-500 transition hover:bg-gray-100 hover:text-gray-700" %>
+                  <%= f.submit "ファイルをアップロード", class: "cursor-pointer rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-100" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+          <div data-hypothesis-management-target="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/50 p-4" data-action="click@window->hypothesis-management#closeOutside">
+            <div class="w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+              <div class="flex items-start justify-between border-b border-gray-100 px-6 py-5">
+                <div>
+                  <h2 class="text-2xl font-bold tracking-tight text-gray-900">仮説を管理</h2>
+                  <p class="mt-2 text-sm leading-6 text-gray-500">未使用の仮説を確認し、編集、削除を行えます。</p>
+                </div>
+                <button type="button" data-action="click->hypothesis-management#close" class="rounded-lg px-2 py-1 text-2xl leading-none text-gray-400 transition hover:bg-gray-100 hover:text-gray-700" aria-label="仮説管理を閉じる">×</button>
+              </div>
+              <div class="max-h-480px overflow-y-auto p-6">
+                <% if @untestedHypotheses.present? %>
+                  <div class="space-y-3">
+                    <% @untestedHypotheses.each do |hypothesis| %>
+                      <div class="flex items-start justify-between gap-4 rounded-xl border border-gray-200 bg-white p-4 transition hover:border-cyan-200 hover:bg-cyan-50/30">
+                        <div class="min-w-0">
+                          <%= form_with model: hypothesis do |f| %>
+                            <%= f.text_field :content, class: "break-words text-sm font-semibold leading-6 text-gray-800" %>
+                        </div>
+                        <div >
+                          <%= f.submit "更新", class: "rounded-lg bg-cyan-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-cyan-600 cursor-pointer" %>
+                          <% end %>
+                          <%= link_to "削除", hypothesis_path(hypothesis), data: { turbo_method: :delete, turbo_confirm: "この仮説を削除しますか？" }, class: "rounded-lg bg-red-500 px-3 py-2 text-sm font-semibold text-white transition hover:bg-red-600" %>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% else %>
+                  <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
+                    <p class="font-semibold text-gray-700">まだ仮説がありません</p>
+                    <p class="mt-2 text-sm text-gray-500">仮説を追加すると、管理できます。</p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="bg-blue-500 py-2 px-4 rounded-xl text-white font-bold cursor-pointer">csvを取り込む</button>
+      </div>
+    <%= render "shared/test_index", app: @app, ad_tests: @ad_tests %>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 <div class="bg-white px-4 py-8 mt-8 rounded-xl">
   <div class="flex justify-between">
     <h2 class="text-2xl font-bold mb-8">テスト結果一覧</h2>
-    <p>テスト件数</p>
+    <p>テスト結果数: <span class="text-lg font-semibold"><%= ad_tests.count %></span></p>
   </div>
   <div class="flex flex-col gap-1 mb-8">
     <input type="text" name="" id="app-or-file-name" placeholder="ファイル名・仮説・振り返り" class="border border-gray-300 rounded-xl p-2">
@@ -36,7 +36,6 @@
       </select>
     </div>
   </div>
-
   <div class="grid gap-4">
     <table>
       <thead>
@@ -46,28 +45,28 @@
           <th class="pb-2 px-2">CPI</th>
           <th class="pb-2 px-2">CTR</th>
           <th class="pb-2 px-2">CVR</th>
+          <th class="pb-2 px-2">imp</th>
           <th class="pb-2 px-2">仮説</th>
           <th class="pb-2 px-2">状態</th>
-          <th class="pb-2 px-2">imp</th>
           <th class="pb-2 px-2">予算</th>
           <th class="pb-2 px-2">消化金額</th>
-          <th class="pb-2 px-2">振り返り</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="border-b border-gray-300">
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-        </tr>
+        <% ad_tests.each do |test| %>
+          <tr class="border-b border-gray-300">
+            <td class="py-4 px-4"><%= test.ad.file_name %></td>
+            <td class="py-4 px-4"><%= l(test.test_start_date, format: :default) %>〜<br><%= l(test.test_end_date, format: :default) %></td>
+            <td class="py-4 px-2"><%=test.cpi %></td>
+            <td class="py-4 px-2"><%= test.ctr %>%</td>
+            <td class="py-4 px-2"><%= test.cvr %>%</td>
+            <td class="py-4 px-2"><%= test.impression %></td>
+            <td class="py-4 px-2"><%= test.ad.hypothesis.content %></td>
+            <td class="py-4 px-2"><span class="whitespace-nowrap rounded-full bg-green-100 px-3 py-1 text-sm text-green-700"><%= test.status %></span></td>
+            <td class="py-4 px-2"><%= test.budget %>円</td>
+            <td class="py-4 px-2"><%= test.amount_spent %>円</td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>
