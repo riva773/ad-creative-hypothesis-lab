@@ -1,10 +1,15 @@
-
-user = User.find_by(email: "user1@example.com")
+user = User.create!(
+  name: "user",
+  email: "user2@example.com",
+  password: "password",
+  password_confirmation: "password",
+  )
 
 app = App.create!(
   name: "サンプルアプリ",
   explanation: "サンプルアプリ",
-  user_id: "#{user.id}"
+  user_id: "#{user.id}",
+  campaign_name: "sample"
 )
 
 hypothesis = Hypothesis.create!(

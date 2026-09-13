@@ -1,0 +1,3 @@
+Ad set Name,status,test_start_date,test_end_date,cpi,cpm,ctr,cvr,impression,budget,amount_spent
+aaa_campaign_001,結果取り込み済み,2026-09-10,2026-09-11,120,850,1.5,2.4,10000,100000,85000
+aaa_campaign_002,結果取り込み済み,2026-09-11,2026-09-12,110,820,1.7,2.6,12000,100000,98000

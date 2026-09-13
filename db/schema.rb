@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_12_061811) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_13_105235) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_12_061811) do
     t.date "test_start_date"
     t.datetime "updated_at", null: false
     t.index ["ad_id"], name: "index_ad_tests_on_ad_id"
+    t.check_constraint "network IS NULL OR (network::text = ANY (ARRAY['Meta'::character varying, 'Google'::character varying, 'AppLovin'::character varying]::text[]))", name: "ad_tests_network_allowed"
   end
 
   create_table "ads", force: :cascade do |t|
@@ -67,17 +68,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_12_061811) do
     t.bigint "hypothesis_id", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["app_id", "file_name"], name: "index_ads_on_app_id_and_file_name", unique: true
     t.index ["app_id"], name: "index_ads_on_app_id"
     t.index ["hypothesis_id"], name: "index_ads_on_hypothesis_id"
     t.index ["user_id"], name: "index_ads_on_user_id"
   end
 
   create_table "apps", force: :cascade do |t|
+    t.string "campaign_name", null: false
     t.datetime "created_at", null: false
     t.text "explanation"
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["campaign_name"], name: "index_apps_on_campaign_name", unique: true
     t.index ["user_id"], name: "index_apps_on_user_id"
   end
 

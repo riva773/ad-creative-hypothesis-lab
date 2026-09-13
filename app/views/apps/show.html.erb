@@ -6,7 +6,7 @@
     <h1 class="text-3xl font-bold pt-8"><%= @app.name %></h1>
     <div class="flex justify-between items-center">
         <div>
-          <p>キャンペーン</p>
+          <p><%= @app.campaign_name %></p>
           <p><%= @app.explanation %></p>
         </div>
         <div class="flex flex-col bg-white border border-gray-300 rounded-xl p-4">
@@ -21,7 +21,10 @@
           <button data-action="click->hypothesis-management#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300" >仮説を管理</button>
           <div data-hypothesis-target="modal"  class="fixed bg-black/50 inset-0 justify-center items-center hidden z-50" data-action="click@window->hypothesis#closeOutside">
             <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
-              <h1 class="text-2xl mb-2">仮説を追加</h1>
+              <div class="flex justify-between items-start">
+                <h1 class="text-2xl mb-2">仮説を追加</h1>
+                <button type="button" data-action="click->hypothesis#close" class="rounded-lg px-2 py-1 text-2xl leading-none text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 cursor-pointer" aria-label="仮説を追加を閉じる">×</button>
+              </div>
               <%= form_with model: @hypothesis, class: "flex flex-col" do |f| %>
                 <%= f.hidden_field :app_id, value: @app.id %>
                 <%= f.label :content, class: "font-bold text-sm" %>
@@ -36,18 +39,21 @@
           <div data-ad-upload-target="modal" data-action="click@window->ad-upload#closeOutside" class="fixed bg-black/50 inset-0 hidden justify-center items-center z-50">
             <div class="w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl ring-1 ring-black/5">
               <div class="mb-8">
-                <h1 class="text-2xl font-bold tracking-tight text-gray-900">テスト記録を追加</h1>
+                <div class="flex items-start justify-between">
+                  <h1 class="text-2xl font-bold tracking-tight text-gray-900">テスト記録を追加</h1>
+                  <button type="button" data-action="click->ad-upload#close" class="rounded-lg px-2 py-1 text-2xl leading-none text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 cursor-pointer" aria-label="広告アップロードを閉じる">×</button>
+                </div>
                 <p class="mt-2 text-sm leading-6 text-gray-500">
                   仮説を選択して、検証する広告動画をアップロードしてください。
                 </p>
               </div>
               <%= form_with model: @ad, class: "space-y-6" do |f| %>
-                <%= f.hidden_field :app_id %>
+                <%= f.hidden_field :app_id, value: @app.id %>
                 <div class="space-y-2">
                   <%= f.label :hypothesis, "対象の仮説", class: "block text-sm font-semibold text-gray-700" %>
                   <select name="hypothesis" class="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100">
                     <%= @hypotheses.each do |hypothesis| %>
-                      <option value="#{hypothesis.id}"><%= hypothesis.content %></option>
+                      <option value="<%= hypothesis.id%>"><%= hypothesis.content %></option>
                     <% end %>
                   </select>
                 </div>
@@ -71,7 +77,7 @@
                   <h2 class="text-2xl font-bold tracking-tight text-gray-900">仮説を管理</h2>
                   <p class="mt-2 text-sm leading-6 text-gray-500">未使用の仮説を確認し、編集、削除を行えます。</p>
                 </div>
-                <button type="button" data-action="click->hypothesis-management#close" class="rounded-lg px-2 py-1 text-2xl leading-none text-gray-400 transition hover:bg-gray-100 hover:text-gray-700" aria-label="仮説管理を閉じる">×</button>
+                <button type="button" data-action="click->hypothesis-management#close" class="rounded-lg px-2 py-1 text-2xl leading-none text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 cursor-pointer" aria-label="仮説管理を閉じる">×</button>
               </div>
               <div class="max-h-480px overflow-y-auto p-6">
                 <% if @untestedHypotheses.present? %>
@@ -100,7 +106,36 @@
             </div>
           </div>
         </div>
-        <button class="bg-blue-500 py-2 px-4 rounded-xl text-white font-bold cursor-pointer">csvを取り込む</button>
+        <div data-controller="csv">
+          <button data-action="click->csv#open" class="bg-blue-500 py-2 px-4 rounded-xl text-white font-bold cursor-pointer">csvを取り込む</button>
+          <div data-csv-target="modal" data-action="click@window->csv#closeOutside" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/50 p-4">
+            <div class="w-full max-w-lg rounded-2xl bg-white p-8 shadow-2xl ring-1 ring-black/5">
+              <div class="mb-8">
+                <div class="flex items-start justify-between">
+                  <h1 class="text-2xl font-bold tracking-tight text-gray-900">CSVを取り込む</h1>
+                  <button type="button" data-action="click->csv#close" class="rounded-lg px-2 py-1 text-2xl leading-none text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 cursor-pointer" aria-label="CSV取り込みを閉じる">×</button>
+                </div>
+                <p class="mt-2 text-sm leading-6 text-gray-500">
+                  テスト結果が記載されたCSVファイルを選択してください。
+                </p>
+              </div>
+              <%= form_with url: ad_tests_path, scope: :ad_test, multipart: true, class: "space-y-6" do |f| %>
+                <%= f.hidden_field :app_id, value: @app.id %>
+                <div class="space-y-2">
+                  <%= f.label :network, class: "block text-sm font-semibold text-gray-700" %>
+                  <%= f.select :network, ["Meta", "Google", "AppLovin"], include_blank: "選択してください", class: "w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100" %>
+                  <%= f.label :csv, "CSVファイル", class: "block text-sm font-semibold text-gray-700 mt-2" %>
+                  <%= f.file_field :csv, accept: ".csv,text/csv", class: "block w-full cursor-pointer rounded-xl border border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500 transition file:mr-4 file:cursor-pointer file:border-0 file:bg-cyan-50 file:px-4 file:py-3 file:font-semibold file:text-cyan-700 hover:border-cyan-400 hover:bg-cyan-50/40" %>
+                  <p class="text-xs text-gray-400">CSV形式のファイルを選択してください。</p>
+                </div>
+                <div class="flex items-center justify-end gap-3 border-t border-gray-100 pt-6">
+                  <button type="button" data-action="click->csv#close" class="rounded-xl px-4 py-2.5 text-sm font-semibold text-gray-500 transition hover:bg-gray-100 hover:text-gray-700">キャンセル</button>
+                  <%= f.submit "CSVを取り込む", class: "cursor-pointer rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-100" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     <%= render "shared/test_index", app: @app, ad_tests: @ad_tests %>
   </div>
