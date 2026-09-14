@@ -1,17 +1,75 @@
 <div class="flex flex-col px-4">
   <h1 class="text-2xl mb-2">アプリ</h1>
-  <input type="text" name="" id="" placeholder="アプリを検索" class="border border-gray-300 rounded p-2 mb-2 bg-white">
-  <%= link_to "#", class: "inline-flex gap-1 text-blue-500 items-center" do %>
-    <svg
-    class="h-4 w-4"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    aria-hidden="true"
-  >
-    <path d="M12 5v14M5 12h14" />
-  </svg>
-    <span>アプリを追加</span>
+  <%= form_with model: @app, url: app_path(@app), method: :get, scope: :app do |f| %>
+    <div class="relative">
+      <svg
+        class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        aria-hidden="true"
+      >
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-4-4" />
+      </svg>
+      <%= f.text_field :search, placeholder: "アプリを検索", class: "w-full rounded-xl border border-gray-300 bg-white py-2 pl-9 pr-10 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100", value: params.dig(:app, :search) %>
+      <% if params.dig(:app, :search).present? %>
+        <%= link_to @app, class: "absolute right-2 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200", aria: { label: "検索条件をクリア" } do %>
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            aria-hidden="true"
+          >
+            <path d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  <div data-controller="app" class="shrink-0 mt-2">
+    <button data-action="click->app#open" class="text-blue-500 text-md cursor-pointer flex items-center border-b border-gray-300 w-full pb-2 mb-2">
+      <svg
+      class="h-4 w-4"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      aria-hidden="true"
+    >
+        <path d="M12 5v14M5 12h14" />
+      </svg>
+      <span>アプリを追加</span>
+    </button>
+    <div data-app-target="modal" class="hidden fixed justify-center items-center z-50 inset-0 bg-black/50" data-action="click->app#closeOnBackdrop">
+      <div class="bg-white p-8 rounded-xl min-w-md">
+        <%= form_with model: @app do |f| %>
+          <div class="flex flex-col">
+            <h1 class="text-2xl font-bold mb-4">アプリを追加</h1>
+            <%= f.label :avatar, "アプリアイコン" %>
+            <%= f.file_field :avatar, accept: "image/png, image_jpeg", class: " cursor-pointer border border-gray-300 rounded mb-2 text-gray-700 file:bg-cyan-50 file:mr-3 file:px-3 file:py-2 file:text-sm file:text-cyan-700 file:font-bold file:cursor-pointer hover:file:bg-cyan-100" %>
+            <%= f.label :name, "アプリ名" %>
+            <%= f.text_field :name, class: "border border-gray-300 rounded p-2 mb-2" %>
+            <%= f.label :campaign_name, "キャンペーン名" %>
+            <%= f.text_field :campaign_name, class: "border border-gray-300 rounded p-2 mb-2" %>
+            <%= f.label :explanation, "アプリ説明文" %>
+            <%= f.text_area :explanation, class: "border border-gray-300 rounded p-2 h-32" %>
+            <div class="mt-4 flex justify-end gap-4">
+              <button type="button" data-action="click->app#close" class="cursor-pointer border border-gray-300 rounded p-2">閉じる</button>
+              <%= f.submit "アプリを追加", class: "bg-cyan-300 text-white font-bold rounded p-2 cursor-pointer" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <% @apps.each do |app| %>
+    <%= link_to app_path(app) do %>
+      <p class="py-1"><%= app.name %></p>
+    <% end %>
   <% end %>
 </div>

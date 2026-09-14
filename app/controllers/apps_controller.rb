@@ -9,6 +9,10 @@ class AppsController < ApplicationController
   end
 
   def show
+    @apps = App.all
+    if params.dig(:app, :search).present?
+      @apps = @apps.where("name LIKE ?", "%#{params[:app][:search]}%")
+    end
     @app = App.find(params[:id])
     @q = @app.ad_tests.ransack(params[:q])
     @ad_tests = @q.result
