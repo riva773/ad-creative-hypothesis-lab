@@ -10,4 +10,5 @@ class User < ApplicationRecord
   has_many :ads
   has_many :hypotheses
   has_many :ad_tests, through: :ads
+  has_many :reviews
 end
