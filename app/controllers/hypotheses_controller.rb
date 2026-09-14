@@ -31,7 +31,7 @@ class HypothesesController < ApplicationController
   end
 
   private
-  
+
   def hypothesis_params
     params.require(:hypothesis).permit(:content, :app_id)
   end

@@ -40,5 +40,4 @@ class ReviewsController < ApplicationController
       hypothesis.ad.blank?
     end
   end
-
 end
