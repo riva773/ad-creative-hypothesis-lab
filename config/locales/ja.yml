@@ -12,8 +12,15 @@ ja:
         password: "パスワード"
       hypothesis:
         content: "仮説内容"
-      ads:
+      ad:
         creative: "ファイル"
+      ad_test:
+        test_start_date: "テスト開始日"
+        test_end_date: "テスト終了日"
+        cpi: "CPI"
+        ctr: "CTR"
+        cvr: "CVR"
+        status: "状態"
   views:
     users:
       index:

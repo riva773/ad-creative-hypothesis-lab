@@ -13,4 +13,12 @@ class Ad < ApplicationRecord
       errors.add(:file_name, "は、キャンペーン名_3桁の番号.mp4の形式にしてください。")
     end
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[file_name]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[hypothesis]
+  end
 end

@@ -16,7 +16,12 @@ class AdTestsController < ApplicationController
         missed_upload_tests.push(csv_ad_file_name)
         next
       end
-      ad_test = AdTest.new(
+      ad_test = ad.ad_tests.find_by(status: "テスト結果待ち")
+      unless ad_test.present?
+        missed_upload_tests.push(csv_ad_file_name)
+        next
+      end
+      if ad_test.update(
         status: row["status"],
         test_start_date: row["test_start_date"],
         test_end_date: row["test_end_date"],
@@ -28,9 +33,7 @@ class AdTestsController < ApplicationController
         budget: row["budget"],
         amount_spent: row["amount_spent"],
         network: params[:ad_test][:network],
-        ad_id: ad.id
       )
-      if ad_test.save
         count += 1
       else
         missed_upload_tests.push(ad_test.ad.file_name)
