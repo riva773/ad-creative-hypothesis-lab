@@ -17,8 +17,8 @@
       <div class="flex gap-2">
         <div data-controller="hypothesis ad-upload hypothesis-management">
           <button data-action="click->hypothesis#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300">+ 仮説を追加</button>
-          <button data-action="click->ad-upload#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300" >+ 広告をアップロード</button>
           <button data-action="click->hypothesis-management#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300" >仮説を管理</button>
+          <button data-action="click->ad-upload#open" class="bg-white py-2 px-4 rounded-xl font-bold cursor-pointer border border-xl border-gray-300" >+ 広告をアップロード</button>
           <div data-hypothesis-target="modal"  class="fixed bg-black/50 inset-0 justify-center items-center hidden z-50" data-action="click@window->hypothesis#closeOutside">
             <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
               <div class="flex justify-between items-start">

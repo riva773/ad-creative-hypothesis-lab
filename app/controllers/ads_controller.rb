@@ -7,7 +7,7 @@ class AdsController < ApplicationController
     if @ad.save
       @ad.ad_tests.create(status: "テスト結果待ち")
       @ad_tests = AdTest.all
-      redirect_to apps_path, status: :see_other, notice: "広告をアップロードしました。"
+      redirect_to @app, status: :see_other, notice: "広告をアップロードしました。"
     else
         Rails.logger.debug "Ad errors: #{@ad.errors.full_messages.inspect}"
       render "apps/show", status: :unprocessable_entity

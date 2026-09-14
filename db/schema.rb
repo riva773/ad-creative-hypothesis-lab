@@ -58,7 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_14_024458) do
     t.date "test_start_date"
     t.datetime "updated_at", null: false
     t.index ["ad_id"], name: "index_ad_tests_on_ad_id"
-    t.check_constraint "network IS NULL OR (network::text = ANY (ARRAY['Meta'::character varying, 'Google'::character varying, 'AppLovin'::character varying]::text[]))", name: "ad_tests_network_allowed"
+    t.check_constraint "network IS NULL OR (network::text = ANY (ARRAY['Meta'::character varying::text, 'Google'::character varying::text, 'AppLovin'::character varying::text]))", name: "ad_tests_network_allowed"
   end
 
   create_table "ads", force: :cascade do |t|

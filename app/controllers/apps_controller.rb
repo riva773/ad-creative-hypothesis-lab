@@ -10,7 +10,8 @@ class AppsController < ApplicationController
 
   def show
     @app = App.find(params[:id])
-    @ad_tests = @app.ad_tests
+    @q = @app.ad_tests.ransack(params[:q])
+    @ad_tests = @q.result
     @hypotheses = @app.hypotheses.where(user_id: current_user.id)
     @hypothesis = Hypothesis.new
     @ad = Ad.new

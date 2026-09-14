@@ -30,7 +30,11 @@
           <%= form_with model: app, method: :delete do |f| %>
             <div class="flex flex-col">
               <h1 class="text-2xl font-bold mb-4">アプリを削除</h1>
-              <%= image_tag app.avatar, class:"w-32 h-32 object-cover mx-auto" %>
+              <% if @app.avatar.attached? %>
+                <%= image_tag @app.avatar, class: "w-32 h-32 object-cover mx-auto", alt: "現在のアプリアイコン" %>
+              <% else %>
+                <%= image_tag "sample_app_logo.png", class: "w-32 h-32 object-cover mx-auto", alt: "現在のアプリアイコン" %>
+              <% end %>
               <p><%= app.name %></p>
               <p><%= app.explanation %></p>
               <div class="mt-4 flex justify-end gap-4">
