@@ -43,5 +43,4 @@ class ReviewsController < ApplicationController
   def update_review_params
     params.require(:review).permit(:content)
   end
-
 end

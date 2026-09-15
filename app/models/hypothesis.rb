@@ -4,7 +4,7 @@ class Hypothesis < ApplicationRecord
   has_one :ad, dependent: :destroy
 
   validates :content, presence: true
-  validates :content, length: { maximum: 150}
+  validates :content, length: { maximum: 150 }
 
   def self.ransackable_attributes(auth_object = nil)
     %w[content]

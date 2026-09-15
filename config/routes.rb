@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, only: [:sessions]
+  devise_for :users, only: [ :sessions ]
   devise_scope :user do
     get "users/sign_up",
       to: "devise/registrations#new",

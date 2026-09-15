@@ -74,7 +74,7 @@ class AdTestsController < ApplicationController
           alert_message ="失敗したファイル：#{missed_upload_tests.join(', ')}"
           redirect_to @app, status: :see_other, notice: message, alert: alert_message
         end
-      else
+    else
         redirect_to @app, status: :see_other, alert: "CSVファイルを選択してください。"
     end
   end
@@ -122,5 +122,4 @@ class AdTestsController < ApplicationController
   def csv_import_params
     params.require(:ad_test).permit(:app_id, :csv, :network)
   end
-
 end
