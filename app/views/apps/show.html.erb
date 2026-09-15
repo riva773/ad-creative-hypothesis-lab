@@ -52,14 +52,14 @@
                 <div class="space-y-2">
                   <%= f.label :hypothesis, "対象の仮説", class: "block text-sm font-semibold text-gray-700" %>
                   <select name="hypothesis" class="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100">
-                    <%= @hypotheses.each do |hypothesis| %>
+                    <%= @untestedHypotheses.each do |hypothesis| %>
                       <option value="<%= hypothesis.id%>"><%= hypothesis.content %></option>
                     <% end %>
                   </select>
                 </div>
                 <div class="space-y-2">
                   <%= f.label :creative, "広告動画", class: "block text-sm font-semibold text-gray-700" %>
-                  <%= f.file_field :creative, class: "block w-full cursor-pointer rounded-xl border border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500 transition file:mr-4 file:cursor-pointer file:border-0 file:bg-cyan-50 file:px-4 file:py-3 file:font-semibold file:text-cyan-700 hover:border-cyan-400 hover:bg-cyan-50/40", accept: "video/mp4, image/png, image/jpeg"  %>
+                  <%= f.file_field :creative, class: "block w-full cursor-pointer rounded-xl border border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500 transition file:mr-4 file:cursor-pointer file:border-0 file:bg-cyan-50 file:px-4 file:py-3 file:font-semibold file:text-cyan-700 hover:border-cyan-400 hover:bg-cyan-50/40", accept: "video/mp4"  %>
                   <p class="text-xs text-gray-400">検証対象となる動画ファイルを選択してください。</p>
                 </div>
 
@@ -125,7 +125,7 @@
                   <%= f.label :network, class: "block text-sm font-semibold text-gray-700" %>
                   <%= f.select :network, ["Meta", "Google", "AppLovin"], include_blank: "選択してください", class: "w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm text-gray-700 outline-none transition focus:border-cyan-500 focus:ring-4 focus:ring-cyan-100" %>
                   <%= f.label :csv, "CSVファイル", class: "block text-sm font-semibold text-gray-700 mt-2" %>
-                  <%= f.file_field :csv, accept: ".csv,text/csv", class: "block w-full cursor-pointer rounded-xl border border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500 transition file:mr-4 file:cursor-pointer file:border-0 file:bg-cyan-50 file:px-4 file:py-3 file:font-semibold file:text-cyan-700 hover:border-cyan-400 hover:bg-cyan-50/40" %>
+                  <%= f.file_field :csv, accept: ".csv,text/csv", class: "block w-full cursor-pointer rounded-xl border border-dashed border-gray-300 bg-gray-50 text-sm text-gray-500 transition file:mr-4 file:cursor-pointer file:border-0 file:bg-cyan-50 file:px-4 file:py-3 file:font-semibold file:text-cyan-700 hover:border-cyan-400 hover:bg-cyan-50/40", required: true %>
                   <p class="text-xs text-gray-400">CSV形式のファイルを選択してください。</p>
                 </div>
                 <div class="flex items-center justify-end gap-3 border-t border-gray-100 pt-6">

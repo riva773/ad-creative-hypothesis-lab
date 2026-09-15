@@ -9,19 +9,8 @@ class AppsController < ApplicationController
   end
 
   def show
-    @apps = App.all
-    if params.dig(:app, :search).present?
-      @apps = @apps.where("name LIKE ?", "%#{params[:app][:search]}%")
-    end
     @app = App.find(params[:id])
-    @q = @app.ad_tests.ransack(params[:q])
-    @ad_tests = @q.result
-    @hypotheses = @app.hypotheses.where(user_id: current_user.id)
-    @hypothesis = Hypothesis.new
-    @ad = Ad.new
-    @untestedHypotheses = @hypotheses.select do |hypothesis|
-      hypothesis.ad.blank?
-    end
+    load_app_show_data
   end
 
   def new

@@ -141,10 +141,6 @@
                         <%= f.select :network, ["Meta", "Google", "AppLovin"], { include_blank: "選択してください" }, class: "w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm" %>
                       </div>
                       <div class="space-y-2">
-                        <%= f.label :status, "状態", class: "block text-sm font-semibold text-gray-700" %>
-                        <%= f.select :status, ["結果取り込み済み", "テスト結果待ち", "振り返り済み"], {}, class: "w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-sm" %>
-                      </div>
-                      <div class="space-y-2">
                         <%= f.label :test_start_date, "計測開始日", class: "block text-sm font-semibold text-gray-700" %>
                         <%= f.date_field :test_start_date, class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm" %>
                       </div>
@@ -176,7 +172,7 @@
                         <%= f.label :budget, "予算", class: "block text-sm font-semibold text-gray-700" %>
                         <%= f.number_field :budget, class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm" %>
                       </div>
-                      <div class="space-y-2 sm:col-span-2">
+                      <div class="space-y-2">
                         <%= f.label :amount_spent, "消化金額", class: "block text-sm font-semibold text-gray-700" %>
                         <%= f.number_field :amount_spent, class: "w-full rounded-xl border border-gray-300 px-4 py-3 text-sm" %>
                       </div>

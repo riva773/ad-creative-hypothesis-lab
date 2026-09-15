@@ -10,4 +10,20 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
   end
+
+  private
+  def load_app_show_data
+    @apps = App.all
+    if params.dig(:app, :search).present?
+      @apps = @apps.where("name LIKE ?", "%#{params[:app][:search]}%")
+    end
+    @q = @app.ad_tests.ransack(params[:q])
+    @ad_tests = @q.result
+    @hypotheses = @app.hypotheses.where(user_id: current_user.id)
+    @hypothesis ||= Hypothesis.new
+    @ad ||= Ad.new
+    @untestedHypotheses = @hypotheses.select do |hypothesis|
+      hypothesis.ad.blank?
+    end
+  end
 end
