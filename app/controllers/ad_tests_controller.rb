@@ -3,6 +3,8 @@ class AdTestsController < ApplicationController
   require "csv"
 
   def results
+    @q = AdTest.all.ransack(params[:q])
+    @ad_tests = @q.result
   end
 
   def create

@@ -1,76 +1,88 @@
-<div class="bg-white px-4 py-8 mt-8 rounded">
-  <div class="flex justify-between">
-    <h2 class="text-2xl font-bold mb-8">テスト結果一覧</h2>
-    <p>テスト件数</p>
-  </div>
-  <div class="flex flex-col gap-1 mb-8">
-    <label for="app-or-file-name">アプリ名・ファイル名</label>
-    <input type="text" name="" id="app-or-file-name" placeholder="アプリ名・ファイル名" class="border border-gray-300 rounded-xl p-2">
-  </div>
-  <div class="flex flex-wrap items-end gap-4 mb-12">
-    <div class="flex flex-col gap-1">
-      <label for="measured-from">計測日（開始）</label>
-      <input type="date" name="" id="measured-from" placeholder="年/月/日" class="border border-gray-300 rounded-xl p-2">
-    </div>
-    <div class="flex flex-col gap-1">
-      <label for="measured-to">計測日（終了）</label>
-      <input type="date" name="" id="measured-to" placeholder="年/月/日" class="border border-gray-300 rounded-xl p-2">
-    </div>
-    <div class="flex flex-col gap-1">
-      <label for="cpi-from">CPI（以上）</label>
-      <input type="number" name="" id="cpi-from" placeholder="円以上" class="border border-gray-300 rounded-xl p-2 max-w-30">
-    </div>
-    <div class="flex flex-col gap-1">
-      <label for="cpi-to">CPI（以下）</label>
-      <input type="number" name="" id="cpi-to" placeholder="円以下" class="border border-gray-300 rounded-xl p-2 max-w-30">
-    </div>
-    <div class="flex flex-col gap-1">
-      <label for="ctr-from">CTR（以上）</label>
-      <input type="number" name="" id="ctr-from" placeholder="%以上" class="border border-gray-300 rounded-xl p-2 max-w-30">
-    </div>
-    <div class="flex flex-col gap-1">
-      <label for="status">状態</label>
-      <select name="" id="status" class="border border-gray-300 rounded-xl p-2">
-        <option value="全て">全て</option>
-        <option value="結果取り込み済み">結果取り込み済み</option>
-        <option value="テスト結果待ち">結果待ち</option>
-      </select>
-    </div>
+<div class="mt-8 rounded-xl bg-white px-4 py-8 sm:px-6">
+  <div class="mb-8 flex flex-wrap items-baseline justify-between gap-3">
+    <h2 class="text-2xl font-bold">テスト結果一覧</h2>
+    <p class="text-sm text-gray-600">テスト件数: <span class="text-lg font-semibold text-gray-900"><%= @ad_tests.count %>件</span></p>
   </div>
 
-  <div class="grid gap-4">
-    <table>
+  <%= search_form_for @q, url: ad_tests_results_path, method: :get do |f| %>
+    <div class="mb-8 flex max-w-xl flex-col gap-1">
+      <%= f.label :ad_app_name_or_ad_file_name_or_ad_hypothesis_content_or_review_content_i_cont, "アプリ名・ファイル名・仮説・振り返り" %>
+      <%= f.search_field :ad_app_name_or_ad_file_name_or_ad_hypothesis_content_or_review_content_i_cont, class: "w-full max-w-lg rounded-xl border border-gray-300 p-2 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100", placeholder: "アプリ名・ファイル名・仮説・振り返り" %>
+    </div>
+    <div class="mb-12 flex flex-wrap items-end gap-4">
+      <div class="flex flex-col gap-1">
+        <%= f.label :test_start_date_gteq, "計測日(開始)" %>
+        <%= f.date_field :test_start_date_gteq, class: "rounded-xl border border-gray-300 p-2" %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <%= f.label :test_end_date_lteq, "計測日(終了)" %>
+        <%= f.date_field :test_end_date_lteq, class: "rounded-xl border border-gray-300 p-2" %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <%= f.label :cpi_lteq, "CPI" %>
+        <%= f.number_field :cpi_lteq, placeholder: "円以下", class: "max-w-30 rounded-xl border border-gray-300 p-2" %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <%= f.label :ctr_gteq, "CTR" %>
+        <%= f.number_field :ctr_gteq, step: :any, placeholder: "%以上", class: "max-w-30 rounded-xl border border-gray-300 p-2" %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <%= f.label :cvr_gteq, "CVR" %>
+        <%= f.number_field :cvr_gteq, step: :any, placeholder: "%以上", class: "max-w-30 rounded-xl border border-gray-300 p-2" %>
+      </div>
+      <div class="flex flex-col gap-1">
+        <%= f.label :status_eq, "状態" %>
+        <%= f.select :status_eq, [["結果取り込み済み", "結果取り込み済み"], ["テスト結果待ち", "テスト結果待ち"], ["振り返り済み", "振り返り済み"]], { include_blank: "全て" }, class: "rounded-xl border border-gray-300 p-2" %>
+      </div>
+      <%= f.submit "検索", class: "cursor-pointer rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-100" %>
+      <%= link_to "リセット", ad_tests_results_path, class: "inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-600 shadow-sm transition hover:bg-gray-50 hover:text-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-100" %>
+    </div>
+  <% end %>
+
+  <div class="overflow-x-auto">
+    <table class="min-w-[1180px] w-full">
       <thead>
-        <tr class="text-left border-b border-gray-300">
-          <th class="pb-2 px-2">アプリ</th>
-          <th class="pb-2 px-2">動画</th>
-          <th class="pb-2 px-2">計測日</th>
-          <th class="pb-2 px-2">CPI</th>
-          <th class="pb-2 px-2">CTR</th>
-          <th class="pb-2 px-2">CVR</th>
-          <th class="pb-2 px-2">仮説</th>
-          <th class="pb-2 px-2">状態</th>
-          <th class="pb-2 px-2">imp</th>
-          <th class="pb-2 px-2">予算</th>
-          <th class="pb-2 px-2">消化金額</th>
-          <th class="pb-2 px-2">振り返り</th>
+        <tr class="border-b border-gray-300 text-left">
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :ad_app_name, "アプリ") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :ad_file_name, "動画") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :test_start_date, "計測日") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :cpi, "CPI") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :ctr, "CTR") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :cvr, "CVR") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :impression, "imp") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :budget, "予算") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :amount_spent, "消化金額") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :ad_hypothesis_content, "仮説") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :review_content, "振り返り") %></th>
         </tr>
       </thead>
       <tbody>
-        <tr class="border-b border-gray-300">
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-          <td class="py-4 px-2">テスト</td>
-        </tr>
+        <% if @ad_tests.any? %>
+          <% @ad_tests.each do |test| %>
+            <tr class="border-b border-gray-200 align-middle">
+              <td class="px-2 py-4 font-semibold text-gray-800"><%= test.ad.app.name %></td>
+              <td class="align-top px-2 py-4">
+                <% if test.ad.creative.attached? %>
+                  <%= video_tag test.ad.creative, controls: true, size: "120x150", class: "rounded-lg object-cover" %>
+                <% end %>
+                <p class="mt-2 max-w-36 break-words text-sm text-gray-700"><%= test.ad.file_name %></p>
+              </td>
+              <td class="whitespace-nowrap px-2 py-4"><%= test.test_start_date.present? ? l(test.test_start_date, format: :default) : "ー" %><br><%= test.test_end_date.present? ? l(test.test_end_date, format: :default) : "ー" %></td>
+              <td class="px-2 py-4"><%= test.cpi.present? ? number_with_delimiter(test.cpi) : "ー" %></td>
+              <td class="px-2 py-4"><%= test.ctr.present? ? "#{test.ctr}%" : "ー" %></td>
+              <td class="px-2 py-4"><%= test.cvr.present? ? "#{test.cvr}%" : "ー" %></td>
+              <td class="px-2 py-4"><%= test.impression.present? ? number_with_delimiter(test.impression) : "ー" %></td>
+              <td class="px-2 py-4"><%= test.budget.present? ? number_with_delimiter(test.budget) : "ー" %></td>
+              <td class="px-2 py-4"><%= test.amount_spent.present? ? number_with_delimiter(test.amount_spent) : "ー" %></td>
+              <td class="max-w-56 whitespace-normal break-words px-2 py-4"><%= test.ad.hypothesis&.content || "ー" %></td>
+              <td class="max-w-56 whitespace-pre-line break-words px-2 py-4"><%= test.review&.content || "ー" %></td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="11" class="px-2 py-12 text-center text-gray-500">条件に一致するテスト結果がありません。</td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
   </div>

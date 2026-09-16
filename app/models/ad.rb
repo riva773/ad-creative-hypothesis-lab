@@ -35,6 +35,6 @@ class Ad < ApplicationRecord
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[hypothesis]
+    %w[app hypothesis]
   end
 end
