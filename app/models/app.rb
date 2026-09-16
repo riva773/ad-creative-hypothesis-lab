@@ -7,4 +7,12 @@ class App < ApplicationRecord
   has_many :ads, dependent: :destroy
   has_many :ad_tests, through: :ads, dependent: :destroy
   has_one_attached :avatar
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[name]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
 end

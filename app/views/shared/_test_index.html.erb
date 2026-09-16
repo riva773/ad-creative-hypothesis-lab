@@ -1,69 +1,71 @@
-<div class="bg-white px-4 py-8 mt-8 rounded-xl">
-  <div class="flex justify-between">
-    <h2 class="text-2xl font-bold mb-8">テスト結果一覧</h2>
-    <p>テスト結果数: <span class="text-lg font-semibold"><%= ad_tests.count %></span></p>
+<div class="mt-8 rounded-xl bg-white px-4 py-8 sm:px-6">
+  <div class="mb-8 flex flex-wrap items-baseline justify-between gap-3">
+    <h2 class="text-2xl font-bold">テスト結果一覧</h2>
+    <p class="text-sm text-gray-600">テスト件数: <span class="text-lg font-semibold text-gray-900"><%= ad_tests.count %>件</span></p>
   </div>
   <%= search_form_for @q, url: app do |f| %>
-    <div class="flex flex-col gap-1 mb-8">
-      <%= f.search_field :ad_file_name_or_ad_hypothesis_content_or_review_content_i_cont, class:"border border-gray-300 rounded-xl p-2", placeholder: "ファイル名・仮説・振り返り"%>
+    <div class="mb-8 flex max-w-xl flex-col gap-1">
+      <%= f.label :ad_file_name_or_ad_hypothesis_content_or_review_content_i_cont, "ファイル名・仮説・振り返り" %>
+      <%= f.search_field :ad_file_name_or_ad_hypothesis_content_or_review_content_i_cont, class:"w-full max-w-lg rounded-xl border border-gray-300 p-2 outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100", placeholder: "ファイル名・仮説・振り返り"%>
     </div>
-    <div class="flex flex-wrap items-end gap-4 mb-12">
+    <div class="mb-12 flex flex-wrap items-end gap-4">
       <div class="flex flex-col gap-1">
-        <%= f.label :test_start_date %>
-        <%= f.search_field :test_start_date_gteq, placeholder: "年/月/日", class: "border border-gray-300 rounded-xl p-2"%>
+        <%= f.label :test_start_date_gteq, "計測日(開始)" %>
+        <%= f.date_field :test_start_date_gteq, class: "rounded-xl border border-gray-300 p-2" %>
       </div>
       <div class="flex flex-col gap-1">
-        <%= f.label :test_end_date %>
-        <%= f.search_field :test_end_date_lteq, placeholder: "年/月/日", class: "border border-gray-300 rounded-xl p-2" %>
+        <%= f.label :test_end_date_lteq, "計測日(終了)" %>
+        <%= f.date_field :test_end_date_lteq, class: "rounded-xl border border-gray-300 p-2" %>
       </div>
       <div class="flex flex-col gap-1">
-        <%= f.label :cpi %>
-        <%= f.search_field :cpi_lteq, placeholder: "円以下", class: "border border-gray-300 rounded-xl p-2 max-w-30" %>
+        <%= f.label :cpi_lteq, "CPI" %>
+        <%= f.number_field :cpi_lteq, placeholder: "円以下", class: "max-w-30 rounded-xl border border-gray-300 p-2" %>
       </div>
       <div class="flex flex-col gap-1">
-        <%= f.label :ctr %>
-        <%= f.search_field :ctr_gteq, placeholder: "%以上", class: "border border-gray-300 rounded-xl p-2 max-w-30" %>
+        <%= f.label :ctr_gteq, "CTR" %>
+        <%= f.number_field :ctr_gteq, step: :any, placeholder: "%以上", class: "max-w-30 rounded-xl border border-gray-300 p-2" %>
       </div>
       <div class="flex flex-col gap-1">
-        <%= f.label :cvr %>
-        <%= f.search_field :cvr_gteq, placeholder: "%以上", class: "border border-gray-300 rounded-xl p-2 max-w-30" %>
+        <%= f.label :cvr_gteq, "CVR" %>
+        <%= f.number_field :cvr_gteq, step: :any, placeholder: "%以上", class: "max-w-30 rounded-xl border border-gray-300 p-2" %>
       </div>
-      <div class="flex flex-col gap-1">
-        <%= f.label :status %>
-        <%= f.select :status_eq, [["結果取り込み済み", "結果取り込み済み"], ["テスト結果待ち", "テスト結果待ち"], ["振り返り済み", "振り返り済み"]], {include_blank: "全て"}, class: "border border-gray-300 rounded-xl p-2" %>
+      <div class="flex flex-col gap-1 whitespace-nowrap">
+        <%= f.label :status_eq, "状態" %>
+        <%= f.select :status_eq, [["結果取り込み済み", "結果取り込み済み"], ["テスト結果待ち", "テスト結果待ち"], ["振り返り済み", "振り返り済み"]], { include_blank: "全て" }, class: "rounded-xl border border-gray-300 p-2" %>
       </div>
       <%= f.submit "検索", class: "cursor-pointer rounded-xl bg-cyan-500 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-cyan-600 focus:outline-none focus:ring-4 focus:ring-cyan-100" %>
       <%= link_to "リセット", app, class: "inline-flex items-center justify-center rounded-xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-600 shadow-sm transition hover:bg-gray-50 hover:text-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-100" %>
     </div>
   <% end %>
-  <div class="grid gap-4">
-    <table>
+  <div class="overflow-x-auto">
+    <table class="min-w-[900px] w-full">
       <thead>
-        <tr class="text-left border-b border-gray-300">
-          <th class="pb-2 px-2"><%= sort_link(@q, :ad_file_name, "動画") %></th>
-          <th class="pb-2 px-2"><%= sort_link(@q, :test_start_date, "計測日") %></th>
-          <th class="pb-2 px-2"><%= sort_link(@q, :ad_hypothesis_content, "仮説") %></th>
-          <th class="pb-2 px-2"><%= sort_link(@q, :cpi, "CPI") %></th>
-          <th class="pb-2 px-2"><%= sort_link(@q, :ctr, "CTR") %></th>
-          <th class="pb-2 px-2"><%= sort_link(@q, :cvr, "CVR") %></th>
-          <th class="pb-2 px-2"><%= sort_link(@q, :review_content, "振り返り") %></th>
+        <tr class="border-b border-gray-300 text-left">
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :ad_file_name, "動画") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :test_start_date, "計測日") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :ad_hypothesis_content, "仮説") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :cpi, "CPI") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :ctr, "CTR") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :cvr, "CVR") %></th>
+          <th class="whitespace-nowrap px-2 pb-2"><%= sort_link(@q, :review_content, "振り返り") %></th>
         </tr>
       </thead>
       <tbody>
-        <% ad_tests.each do |test| %>
-          <tr data-controller="review" class="border-b border-gray-300">
-            <td class="py-4 px-4">
+        <% if ad_tests.any? %>
+          <% ad_tests.each do |test| %>
+            <tr data-controller="review" class="border-b border-gray-200 align-middle">
+            <td class="align-top px-2 py-4">
               <% if test.ad.creative.attached? %>
                 <%= video_tag test.ad.creative, controls: true, size: "120x150" %>
               <% end %>
-              <p class="text-sm"><%= test.ad.file_name %></p>
+              <p class="mt-2 max-w-36 break-words text-sm text-gray-700"><%= test.ad.file_name %></p>
             </td>
-            <td class="py-4 px-4"><%= test.test_start_date.present? ? l(test.test_start_date, format: :default) : "" %>〜<br><%= test.test_end_date.present? ? l(test.test_end_date, format: :default) : "" %></td>
-            <td class="py-4 px-2"><%= test.ad.hypothesis.content %></td>
-            <td class="py-4 px-2"><%= test.cpi.present? ? test.cpi.to_fs(:delimited) : "" %></td>
-            <td class="py-4 px-2"><%= test.ctr.present? ? "#{test.ctr}%" : "" %></td>
-            <td class="py-4 px-2"><%= test.cvr.present? ? "#{test.cvr}%" : "" %></td>
-            <td class="group relative py-4 px-2 text-cyan-600 transition hover:text-cyan-700 hover:underline hover:underline-offset-4"><button type="button" data-action="click->review#open" class="cursor-pointer"><%= test.review.present? ? test.review.content : "ー" %></button>
+            <td class="whitespace-nowrap px-2 py-4"><%= test.test_start_date.present? ? l(test.test_start_date, format: :default) : "" %>〜<br><%= test.test_end_date.present? ? l(test.test_end_date, format: :default) : "" %></td>
+            <td class="max-w-56 whitespace-normal break-words px-2 py-4"><%= test.ad.hypothesis.content %></td>
+            <td class="px-2 py-4"><%= test.cpi.present? ? test.cpi.to_fs(:delimited) : "" %></td>
+            <td class="px-2 py-4"><%= test.ctr.present? ? "#{test.ctr}%" : "" %></td>
+            <td class="px-2 py-4"><%= test.cvr.present? ? "#{test.cvr}%" : "" %></td>
+            <td class="group relative max-w-56 whitespace-pre-line break-words py-4 px-2 text-cyan-600 transition hover:text-cyan-700 hover:underline hover:underline-offset-4"><button type="button" data-action="click->review#open" class="cursor-pointer"><%= test.review.present? ? test.review.content : "ー" %></button>
               <div data-action="click@window->review#closeOutside" data-review-target="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-slate-950/50 p-4 text-left">
                 <div class="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-2xl ring-1 ring-black/5">
                   <div class="flex items-start justify-between border-b border-gray-100 pb-5">
@@ -114,7 +116,7 @@
                 </div>
               </div>
             </td>
-            <td class="relative py-4 px-2">
+            <td class="relative px-2 py-4">
             <div data-controller="ad-test">
               <button type="button" data-action="click->ad-test#open" class="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-colors cursor-pointer" aria-label="操作メニューを開く">
                 <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -205,6 +207,11 @@
               </div>
             </div>
             </td>
+            </tr>
+          <% end %>
+        <% else %>
+          <tr>
+            <td colspan="7" class="px-2 py-12 text-center text-gray-500">条件に一致するテスト結果がありません。</td>
           </tr>
         <% end %>
       </tbody>
