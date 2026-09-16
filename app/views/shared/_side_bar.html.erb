@@ -1,9 +1,9 @@
-<div class="flex flex-col px-4">
-  <h1 class="text-2xl mb-2">アプリ</h1>
+<div class="flex h-full flex-col gap-4 bg-slate-950 px-4 py-6 text-slate-300 overflow-y-auto">
+  <h1 class="mb-1 text-xs font-semibold tracking-[0.18em] text-slate-400">アプリ</h1>
   <%= form_with model: @app, url: app_path(@app), method: :get, scope: :app do |f| %>
     <div class="relative">
       <svg
-        class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+        class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -13,9 +13,9 @@
         <circle cx="11" cy="11" r="7" />
         <path d="m20 20-4-4" />
       </svg>
-      <%= f.text_field :search, placeholder: "アプリを検索", class: "w-full rounded-xl border border-gray-300 bg-white py-2 pl-9 pr-10 text-sm outline-none transition focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100", value: params.dig(:app, :search) %>
+      <%= f.text_field :search, placeholder: "アプリを検索", class: "w-full rounded-xl border border-slate-700 bg-slate-900 py-2.5 pl-9 pr-10 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30", value: params.dig(:app, :search) %>
       <% if params.dig(:app, :search).present? %>
-        <%= link_to @app, class: "absolute right-2 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-gray-400 transition hover:bg-gray-100 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-200", aria: { label: "検索条件をクリア" } do %>
+        <%= link_to @app, class: "absolute right-2 top-1/2 inline-flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-lg text-slate-500 transition hover:bg-slate-800 hover:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/40", aria: { label: "検索条件をクリア" } do %>
           <svg
             class="h-4 w-4"
             viewBox="0 0 24 24"
@@ -30,8 +30,8 @@
       <% end %>
     </div>
   <% end %>
-  <div data-controller="app" class="shrink-0 mt-2">
-    <button data-action="click->app#open" class="text-blue-500 text-md cursor-pointer flex items-center border-b border-gray-300 w-full pb-2 mb-2">
+  <div data-controller="app" class="mt-2 shrink-0">
+    <button data-action="click->app#open" class="flex w-full cursor-pointer items-center gap-2 border-b border-slate-800 pb-3 text-sm font-semibold text-blue-300 transition hover:text-blue-200">
       <svg
       class="h-4 w-4"
       viewBox="0 0 24 24"
@@ -44,22 +44,40 @@
       </svg>
       <span>アプリを追加</span>
     </button>
-    <div data-app-target="modal" class="hidden fixed justify-center items-center z-50 inset-0 bg-black/50" data-action="click->app#closeOnBackdrop">
-      <div class="bg-white p-8 rounded-xl min-w-md">
-        <%= form_with model: @app do |f| %>
+    <div data-app-target="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 p-4" data-action="click->app#closeOnBackdrop">
+      <div class="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-8 text-left shadow-2xl ring-1 ring-slate-900/5">
+        <%= form_with model: @new_app do |f| %>
           <div class="flex flex-col">
-            <h1 class="text-2xl font-bold mb-4">アプリを追加</h1>
-            <%= f.label :avatar, "アプリアイコン" %>
-            <%= f.file_field :avatar, accept: "image/png, image_jpeg", class: " cursor-pointer border border-gray-300 rounded mb-2 text-gray-700 file:bg-cyan-50 file:mr-3 file:px-3 file:py-2 file:text-sm file:text-cyan-700 file:font-bold file:cursor-pointer hover:file:bg-cyan-100" %>
-            <%= f.label :name, "アプリ名" %>
-            <%= f.text_field :name, class: "border border-gray-300 rounded p-2 mb-2" %>
-            <%= f.label :campaign_name, "キャンペーン名" %>
-            <%= f.text_field :campaign_name, class: "border border-gray-300 rounded p-2 mb-2" %>
-            <%= f.label :explanation, "アプリ説明文" %>
-            <%= f.text_area :explanation, class: "border border-gray-300 rounded p-2 h-32" %>
-            <div class="mt-4 flex justify-end gap-4">
-              <button type="button" data-action="click->app#close" class="cursor-pointer border border-gray-300 rounded p-2">閉じる</button>
-              <%= f.submit "アプリを追加", class: "bg-cyan-300 text-white font-bold rounded p-2 cursor-pointer" %>
+            <div class="flex items-start justify-between border-b border-slate-100 pb-5">
+              <div>
+                <p class="text-sm font-semibold text-blue-700">アプリ管理</p>
+                <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">アプリを追加</h1>
+              </div>
+              <button type="button" data-action="click->app#close" class="cursor-pointer rounded-lg px-2 py-1 text-2xl leading-none text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" aria-label="アプリ追加を閉じる">×</button>
+            </div>
+            <div class="mt-6 space-y-4">
+              <div class="space-y-2">
+                <%= f.label :avatar, "アプリアイコン", class: "block text-sm font-semibold text-slate-700" %>
+                <%= f.file_field :avatar, accept: "image/png, image_jpeg", class: "block w-full cursor-pointer rounded-xl border border-dashed border-slate-300 text-sm text-slate-700 transition hover:border-blue-400 file:mr-3 file:cursor-pointer file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-sm file:font-bold file:text-blue-700" %>
+                <p class="text-xs text-slate-400">正方形の画像を推奨します。</p>
+              </div>
+              <div class="space-y-2">
+                <%= f.label :name, "アプリ名", class: "block text-sm font-semibold text-slate-700" %>
+                <%= f.text_field :name, class: "w-full rounded-xl border border-slate-300 p-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100" %>
+              </div>
+              <div class="space-y-2">
+                <%= f.label :campaign_name, "キャンペーン名", class: "block text-sm font-semibold text-slate-700" %>
+                <%= f.text_field :campaign_name, placeholder: "例：春キャンペーン", class: "w-full rounded-xl border border-slate-300 p-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100" %>
+                <p class="text-xs text-slate-400">広告配信で使用するキャンペーン名を入力してください。</p>
+              </div>
+              <div class="space-y-2">
+                <%= f.label :explanation, "アプリ説明文", class: "block text-sm font-semibold text-slate-700" %>
+                <%= f.text_area :explanation, placeholder: "例：新商品の認知拡大を目的にした広告アプリです", class: "h-32 w-full rounded-xl border border-slate-300 p-2.5 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-100" %>
+              </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-5">
+              <button type="button" data-action="click->app#close" class="cursor-pointer rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50 hover:text-slate-900">閉じる</button>
+              <%= f.submit "アプリを追加", class: "cursor-pointer rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-100" %>
             </div>
           </div>
         <% end %>
@@ -68,8 +86,12 @@
   </div>
 
   <% @apps.each do |app| %>
-    <%= link_to app_path(app) do %>
-      <p class="py-1"><%= app.name %></p>
+    <% if app == @app %>
+      <p class="rounded-xl px-3 py-2 text-sm font-medium text-sky-300"><%= app.name %></p>
+    <% else %>
+      <%= link_to app_path(app) do %>
+        <p class="rounded-xl px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"><%= app.name %></p>
+      <% end %>
     <% end %>
   <% end %>
 </div>

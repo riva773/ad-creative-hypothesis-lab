@@ -6,9 +6,12 @@ class AppsController < ApplicationController
       @apps = @apps.where("name LIKE ?", "%#{params[:app][:search]}%")
     end
     @app = App.new
+    @new_app = App.new
   end
 
   def show
+    @focus_ad_test_id = params[:focus_ad_test_id]
+    @new_app = App.new
     @app = App.find(params[:id])
     load_app_show_data
   end
@@ -18,10 +21,13 @@ class AppsController < ApplicationController
   end
 
   def create
-    @app = current_user.apps.build(app_params)
-    if @app.save
+    @new_app = current_user.apps.build(app_params)
+    if @new_app.save
       redirect_to apps_path, status: :see_other, notice: "アプリを作成しました。"
     else
+      @apps = App.all
+      @app = App.new
+      flash.now[:alert] = @new_app.errors.full_messages.join("、")
       render :index, status: :unprocessable_entity
     end
   end
