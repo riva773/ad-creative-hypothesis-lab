@@ -46,7 +46,7 @@ export default class extends Controller {
   }
 
   closeOutside(event) {
-    if (this.menuTarget === event.target) {
+    if (!this.element.contains(event.target)) {
       this.close()
     }
   }

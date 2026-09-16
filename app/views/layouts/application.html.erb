@@ -19,22 +19,24 @@
   </head>
 
   <body>
-    <div class="bg-cyan-100 min-h-screen">
+    <div class="bg-sky-50 min-h-screen text-slate-900">
       <% if user_signed_in? %>
         <%= render "shared/login_header" %>
       <% else %>
         <%= render "shared/header" %>
       <% end %>
-      <% if flash[:notice] %>
-        <div class="mx-4 mt-4 w-fit max-w-[calc(100%-2rem)] rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-sm" role="status">
-          <%= flash[:notice] %>
-        </div>
-      <% end %>
-      <% if flash[:alert] %>
-        <div class="mx-4 mt-4 w-fit max-w-[calc(100%-2rem)] rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800 shadow-sm" role="alert">
-          <%= flash[:alert] %>
-        </div>
-      <% end %>
+      <div class="relative">
+        <% if flash[:notice] %>
+          <div class="absolute left-1/2 -translate-x-1/2 mx-4 mt-4 w-fit max-w-[calc(100%-2rem)] rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-800 shadow-sm" role="status ">
+            <%= flash[:notice] %>
+          </div>
+        <% end %>
+        <% if flash[:alert] %>
+          <div class="absolute left-1/2 -translate-x-1/2 mx-4 mt-4 w-fit max-w-[calc(100%-2rem)] rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-medium text-rose-800 shadow-sm" role="alert">
+            <%= flash[:alert] %>
+          </div>
+        <% end %>
+      </div>
       <%= yield %>
     </div>
   </body>

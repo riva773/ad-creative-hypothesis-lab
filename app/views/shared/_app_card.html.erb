@@ -1,50 +1,52 @@
-<div class="border border-gray-300 rounded-xl col-span-1 pb-4">
-  <%= link_to app do %>
-    <div class="w-full aspect-square overflow-hidden rounded-xl" >
+<div class="rounded-2xl border border-slate-200 bg-white pb-3 shadow-sm transition duration-200 hover:border-blue-200 hover:shadow-lg">
+  <%= link_to app, class: "block" do %>
+    <div class="aspect-square w-full overflow-hidden rounded-t-2xl bg-slate-100">
       <% if app.avatar.attached? %>
-        <%= image_tag app.avatar, class: "pb-2 rounded object-cover w-full h-full", alt: "アプリアイコン" %>
+        <%= image_tag app.avatar, class: "h-full w-full object-cover", alt: "アプリアイコン" %>
       <% else %>
-        <%= image_tag "sample_app_logo.png", class: "pb-2 rounded object-cover w-full h-full", alt: "アプリアイコン" %>
+        <%= image_tag "sample_app_logo.png", class: "h-full w-full object-cover", alt: "アプリアイコン" %>
       <% end %>
     </div>
-    <div class="px-4">
-      <p class="font-bold"><%= app.name %></p>
-      <p class="mt-1 text-sm text-gray-500"><%= app.campaign_name %></p>
-    </div>
   <% end %>
-  <% if app.user_id === current_user.id %>
-    <div data-controller="app-menu app-destroy" class="flex flex-col items-end">
-      <button class="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100 transition-colors cursor-pointer" data-action="click->app-menu#toggle">
-        <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5?" />
-        </svg>
-      </button>
-      <div data-app-menu-target="modal" class="hidden">
-        <div class="bg-gray-100 rounded inline-block text-center p-2">
-          <button class="border-b border-gray-300 text-red-500 cursor-pointer" type="button" data-action="click->app-menu#close click->app-destroy#open">アプリを削除</button>
-          <p><%= link_to "アプリを編集", edit_app_path(app) %></p>
+
+  <div class="flex items-center justify-between gap-2 px-4 pt-3">
+    <%= link_to app_path(app), class: "min-w-0 flex-1" do %>
+      <p class="truncate font-bold text-slate-900" title="<%= app.name %>"><%= app.name %></p>
+    <% end %>
+
+    <% if app.user_id === current_user.id %>
+      <div data-controller="app-menu app-destroy" data-action="click@window->app-menu#closeOutside" class="relative shrink-0">
+        <button type="button" aria-label="アプリの操作メニューを開く" class="cursor-pointer rounded-full p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500/30" data-action="click->app-menu#toggle">
+          <svg xmlns="http://w3.org" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5?" />
+          </svg>
+        </button>
+        <div data-app-menu-target="modal" class="absolute right-0 top-full z-40 mt-1 hidden min-w-32 rounded-xl border border-slate-200 bg-white p-2 text-center text-sm shadow-lg">
+          <button class="cursor-pointer border-b border-slate-200 text-rose-600 transition hover:text-rose-700" type="button" data-action="click->app-menu#close click->app-destroy#open">アプリを削除</button>
+          <p><%= link_to "アプリを編集", edit_app_path(app), class: "text-slate-700 transition hover:text-slate-900" %></p>
         </div>
-      </div>
-      <div data-app-destroy-target="modal" data-action="click@window->app-destroy#closeOutside" class="hidden fixed justify-center items-center z-50 inset-0 bg-black/50">
-        <div class="bg-white p-8 rounded-xl min-w-md">
-          <%= form_with model: app, method: :delete do |f| %>
-            <div class="flex flex-col">
-              <h1 class="text-2xl font-bold mb-4">アプリを削除</h1>
-              <% if @app.avatar.attached? %>
-                <%= image_tag @app.avatar, class: "w-32 h-32 object-cover mx-auto", alt: "現在のアプリアイコン" %>
-              <% else %>
-                <%= image_tag "sample_app_logo.png", class: "w-32 h-32 object-cover mx-auto", alt: "現在のアプリアイコン" %>
-              <% end %>
-              <p><%= app.name %></p>
-              <p><%= app.explanation %></p>
-              <div class="mt-4 flex justify-end gap-4">
-                <button type="button" data-action="click->app-destroy#close" class="cursor-pointer border border-gray-300 rounded p-2">閉じる</button>
-                <%= f.submit "アプリを削除", class: "bg-cyan-300 text-white font-bold rounded p-2 cursor-pointer" %>
+        <div data-app-destroy-target="modal" data-action="click@window->app-destroy#closeOutside" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 p-4">
+          <div class="max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl bg-white p-8 shadow-2xl ring-1 ring-slate-900/5">
+            <%= form_with model: app, method: :delete do |f| %>
+              <div class="flex flex-col">
+                <h1 class="mb-4 text-2xl font-bold text-slate-900">アプリを削除</h1>
+                <% if app.avatar.attached? %>
+                  <%= image_tag app.avatar, class: "mx-auto h-32 w-32 rounded-2xl object-cover", alt: "現在のアプリアイコン" %>
+                <% else %>
+                  <%= image_tag "sample_app_logo.png", class: "mx-auto h-32 w-32 rounded-2xl object-cover", alt: "現在のアプリアイコン" %>
+                <% end %>
+                <p class="mt-5 font-bold text-slate-900"><%= app.name %></p>
+                <p class="mt-2 text-sm leading-6 text-slate-500"><%= app.explanation %></p>
+                <div class="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-5">
+                  <button type="button" data-action="click->app-destroy#close" class="cursor-pointer rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-semibold text-slate-600 transition hover:bg-slate-50">閉じる</button>
+                  <%= f.submit "アプリを削除", class: "cursor-pointer rounded-xl bg-rose-600 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-rose-700 focus:outline-none focus:ring-4 focus:ring-rose-100" %>
+                </div>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+  <p class="mt-1 truncate px-4 text-sm text-slate-500" title="<%= app.campaign_name %>">キャンペーン名: <%= app.campaign_name %></p>
 </div>

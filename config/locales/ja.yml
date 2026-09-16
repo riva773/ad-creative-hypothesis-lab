@@ -21,6 +21,9 @@ ja:
         ctr: "CTR"
         cvr: "CVR"
         status: "状態"
+      app:
+        name: "アプリ名"
+        campaign_name: "キャンペーン名"
   views:
     users:
       index:

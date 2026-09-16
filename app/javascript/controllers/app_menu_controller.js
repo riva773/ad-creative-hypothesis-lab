@@ -10,4 +10,10 @@ export default class extends Controller {
   close() {
     this.modalTarget.classList.add("hidden")
   }
+
+  closeOutside(event) {
+    if (!this.element.contains(event.target)) {
+      this.close()
+    }
+  }
 }
