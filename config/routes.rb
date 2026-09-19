@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       to: "devise/registrations#create",
       as: :user_registration
   end
-  root "apps#index"
+  root "welcome#index"
   resources :apps, except: [ :new ]
   resources :hypotheses, only: [ :create, :edit, :update, :destroy ]
   resources :ads, only: [ :create ]

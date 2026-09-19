@@ -8,7 +8,7 @@ RSpec.describe "Reviews", type: :system do
     fill_in "メールアドレス", with: user.email
     fill_in "パスワード", with: user.password
     click_button "ログイン"
-    expect(page).to have_current_path(root_path)
+    expect(page).to have_current_path(apps_path)
   end
   let!(:target_hypothesis) do
     create(
