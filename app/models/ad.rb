@@ -16,7 +16,7 @@ class Ad < ApplicationRecord
   private
 
   def file_name_match_app_campaign_name
-    return if file_name.blank?
+    return if file_name.blank? || app.nil?
     pattern = /\A#{Regexp.escape(app.campaign_name)}_[0-9]{3}\.mp4\z/
     unless file_name.match?(pattern)
       errors.add(:file_name, "は、キャンペーン名_3桁の番号.mp4の形式にしてください。")
@@ -26,7 +26,7 @@ class Ad < ApplicationRecord
   def app_id_match_hypothesis_app_id
     return if app_id.blank? || hypothesis_id.blank? || hypothesis.blank?
     unless app_id == hypothesis.app_id
-      errors.add(:base, "広告と仮説はは、同じアプリに属している必要があります。")
+      errors.add(:base, "広告と仮説は、同じアプリに属している必要があります。")
     end
   end
 

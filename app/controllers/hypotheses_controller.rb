@@ -5,10 +5,12 @@ class HypothesesController < ApplicationController
     @app = App.find(params[:hypothesis][:app_id])
     @hypothesis = current_user.hypotheses.new(create_hypothesis_params)
     @hypothesis.app = @app
+
     if @hypothesis.save
       redirect_to @app, status: :see_other, notice: "仮説を作成しました。"
     else
       load_app_show_data
+      flash.now[:alert] = @hypothesis.errors.full_messages.to_sentence
       render "apps/show", status: :unprocessable_entity
     end
   end

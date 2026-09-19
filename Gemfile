@@ -58,6 +58,12 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  gem "rspec-rails"
+
+  gem "factory_bot_rails"
+
+  gem "shoulda-matchers"
 end
 
 group :development do
@@ -80,3 +86,5 @@ gem "json", "< 3"
 gem "rails-i18n", ">= 8.1"
 
 gem "devise-i18n", ">= 1.16"
+
+gem "bullet"
