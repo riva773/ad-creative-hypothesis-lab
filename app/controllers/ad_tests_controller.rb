@@ -4,7 +4,18 @@ class AdTestsController < ApplicationController
 
   def results
     @q = AdTest.all.ransack(params[:q])
-    @ad_tests = @q.result
+    @ad_tests = @q.result.includes(
+      :review,
+      ad: [
+        :hypothesis,
+        {
+          app: {
+            avatar_attachment: :blob
+          }
+        },
+        { creative_attachment: :blob }
+      ]
+    )
   end
 
   def create

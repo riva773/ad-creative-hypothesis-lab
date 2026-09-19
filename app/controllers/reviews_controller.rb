@@ -16,7 +16,7 @@ class ReviewsController < ApplicationController
         @review.save!
         @review.ad_test.update!(status: "振り返り済み")
       end
-      redirect_to app_path(@app), status: :see_other
+      redirect_to app_path(@app), status: :see_other, notice: "振り返りを作成しました。"
     rescue ActiveRecord::RecordInvalid
       load_app_show_data
       render "apps/show", status: :unprocessable_entity

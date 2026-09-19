@@ -4,7 +4,7 @@ class AdTest < ApplicationRecord
 
   validates :status, inclusion: { in: %w[ 結果取り込み済み テスト結果待ち 振り返り済み ] }
   validates :network, inclusion: { in: %w[ Meta Google AppLovin ], allow_nil: true }
-  validates :cpi, :cpm, :impression, :budget, :amount_spent, numericality: { minimum: 0 }, allow_nil: true
+  validates :cpi, :cpm, :impression, :budget, :amount_spent, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
   validates :ctr, :cvr, numericality: { in: 0..100 }, allow_nil: true
   validate :amount_spent_less_than_budget
   validate :test_end_date_must_be_after_test_start_date

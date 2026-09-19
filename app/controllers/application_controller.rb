@@ -18,12 +18,20 @@ class ApplicationController < ActionController::Base
       @apps = @apps.where("name LIKE ?", "%#{params[:app][:search]}%")
     end
     @q = @app.ad_tests.ransack(params[:q])
-    @ad_tests = @q.result
-    @hypotheses = @app.hypotheses.where(user_id: current_user.id)
+    @ad_tests = @q.result.includes(
+      :review,
+      ad: [
+        :hypothesis,
+        :user,
+        { creative_attachment: :blob }
+      ]
+    )
+    @hypotheses = @app.hypotheses.where(user_id: current_user.id).includes(:ad).order(:id)
     @hypothesis ||= Hypothesis.new
     @ad ||= Ad.new
     @untestedHypotheses = @hypotheses.select do |hypothesis|
       hypothesis.ad.blank?
     end
+    @new_app ||= App.new
   end
 end

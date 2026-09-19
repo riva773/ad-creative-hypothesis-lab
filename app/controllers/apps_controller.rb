@@ -1,7 +1,7 @@
 class AppsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @apps = App.all
+    @apps = App.includes(avatar_attachment: :blob)
     if params.dig(:app, :search).present?
       @apps = @apps.where("name LIKE ?", "%#{params[:app][:search]}%")
     end
@@ -25,7 +25,7 @@ class AppsController < ApplicationController
     if @new_app.save
       redirect_to apps_path, status: :see_other, notice: "アプリを作成しました。"
     else
-      @apps = App.all
+      @apps = App.all.includes(avatar_attachment: :blob)
       @app = App.new
       flash.now[:alert] = @new_app.errors.full_messages.join("、")
       render :index, status: :unprocessable_entity

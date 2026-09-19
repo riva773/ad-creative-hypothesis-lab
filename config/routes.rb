@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       as: :user_registration
   end
   root "apps#index"
-  resources :apps
+  resources :apps, except: [ :new ]
   resources :hypotheses, only: [ :create, :edit, :update, :destroy ]
   resources :ads, only: [ :create ]
   resources :ad_tests, only: [ :create, :update, :destroy ]
