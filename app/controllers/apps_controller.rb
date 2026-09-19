@@ -1,7 +1,7 @@
 class AppsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @apps = App.includes(avatar_attachment: :blob)
+    @apps = App.includes(avatar_attachment: :blob).order(:id)
     if params.dig(:app, :search).present?
       @apps = @apps.where("name LIKE ?", "%#{params[:app][:search]}%")
     end
