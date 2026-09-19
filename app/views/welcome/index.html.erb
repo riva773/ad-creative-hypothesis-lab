@@ -1,0 +1,45 @@
+<main class="mx-auto flex min-h-[calc(100vh-5rem)] max-w-5xl items-center px-4 py-12 sm:px-6 lg:px-10">
+  <div class="w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-xl shadow-slate-950/5">
+    <div class="grid lg:grid-cols-[1.15fr_0.85fr]">
+      <div class="p-8 sm:p-12">
+        <h1 class="max-w-xl text-4xl font-bold leading-tight tracking-tight text-slate-950 sm:text-6xl">
+          Ad Creative<br>Hypothesis Lab
+        </h1>
+        <p class="mt-6 max-w-xl text-sm leading-7 text-slate-600 sm:text-base">
+          仮説の作成、広告の登録、テスト結果の取り込み、振り返りまでをアプリごとに管理できます。
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <%= link_to "ログイン", new_user_session_path, class: "rounded-lg bg-blue-600 px-6 py-3 text-center text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-500/30" %>
+          <%= link_to "会員登録", new_user_registration_path, class: "rounded-lg border border-slate-300 bg-white px-6 py-3 text-center text-sm font-semibold text-slate-700 transition hover:bg-slate-50" %>
+        </div>
+      </div>
+
+      <div class="border-t border-slate-200 bg-slate-50 p-8 sm:p-12 lg:border-t-0 lg:border-l">
+        <p class="text-sm font-bold text-slate-900">できること</p>
+        <ol class="mt-6 space-y-5">
+          <li class="flex gap-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">1</span>
+            <div>
+              <p class="font-bold text-slate-900">仮説を登録</p>
+              <p class="mt-1 text-sm leading-6 text-slate-600">検証したい広告アイデアを整理します。</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">2</span>
+            <div>
+              <p class="font-bold text-slate-900">広告と結果を管理</p>
+              <p class="mt-1 text-sm leading-6 text-slate-600">CSVでテスト結果を取り込み、一覧で確認します。</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">3</span>
+            <div>
+              <p class="font-bold text-slate-900">次の施策につなげる</p>
+              <p class="mt-1 text-sm leading-6 text-slate-600">振り返りを残し、次の仮説に活かします。</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</main>
