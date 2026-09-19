@@ -147,17 +147,17 @@ RSpec.describe "Apps", type: :request do
       let(:valid_params) do
         {
           app: {
-            name: "更新済みアプリ",
+            name: "更新済みアプリ"
           }
         }
       end
 
       it "アプリを更新してアプリ一覧画面にリダイレクト" do
         old_name = target_app.name
-        expect{
+        expect {
           patch app_path(target_app),
           params: valid_params
-      }.to change{ target_app.reload.name}.from(old_name).to("更新済みアプリ")
+      }.to change { target_app.reload.name }.from(old_name).to("更新済みアプリ")
 
       expect(response).to redirect_to(apps_path)
       end
@@ -181,7 +181,7 @@ RSpec.describe "Apps", type: :request do
         expect {
           patch app_path(target_app),
           params: invalid_params
-      }.not_to change{ target_app.reload.name }
+      }.not_to change { target_app.reload.name }
 
       expect(response).to have_http_status(:unprocessable_content)
       end

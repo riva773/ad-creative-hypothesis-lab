@@ -7,7 +7,7 @@ RSpec.describe Hypothesis, type: :model do
   describe "バリデーション" do
     context "内容が空の時" do
       it "無効になる" do
-        hypothesis = build(:hypothesis, content: "", user: user, app: app )
+        hypothesis = build(:hypothesis, content: "", user: user, app: app)
         expect(hypothesis).not_to be_valid
       end
     end
@@ -15,7 +15,7 @@ RSpec.describe Hypothesis, type: :model do
     context "内容が150文字を超える時" do
       it "無効になる" do
         long_str = "a"*151
-        hypothesis = build(:hypothesis, content: long_str, user: user, app: app )
+        hypothesis = build(:hypothesis, content: long_str, user: user, app: app)
         expect(hypothesis).not_to be_valid
       end
     end

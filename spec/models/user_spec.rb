@@ -55,7 +55,6 @@ RSpec.describe User, type: :model do
     context "振り返りとのリレーション" do
       it "Reviewにhas_manyで紐づいている" do
             expect(User.reflect_on_association(:reviews).macro).to eq :has_many
-
       end
     end
   end

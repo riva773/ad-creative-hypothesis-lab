@@ -37,7 +37,7 @@ RSpec.describe "Ads", type: :request do
             app_id: target_app.id,
             creative: creative
           },
-          hypothesis: target_hypothesis.id,
+          hypothesis: target_hypothesis.id
         }
       end
 
@@ -72,12 +72,11 @@ RSpec.describe "Ads", type: :request do
             app_id: target_app.id,
             creative: creative
           },
-          hypothesis: target_hypothesis.id,
+          hypothesis: target_hypothesis.id
         }
       end
 
       it "広告もAdTestも作成せずアプリ詳細画面を再表示する" do
-
         expect {
           post ads_path,
           params: invalid_params
@@ -109,7 +108,7 @@ RSpec.describe "Ads", type: :request do
       end
 
       it "他ユーザーのリソースには広告を作成できない" do
-        expect{
+        expect {
           post ads_path,
           params: other_params
         }.to change(AdTest, :count).by(0).and change(Ad, :count).by(0)

@@ -95,7 +95,7 @@ RSpec.describe "Hypotheses", type: :request do
         expect {
           patch hypothesis_path(target_hypothesis),
           params: invalid_params
-      }.not_to change{ target_hypothesis.reload.content }
+      }.not_to change { target_hypothesis.reload.content }
 
         expect(response).to have_http_status(:unprocessable_content)
       end
@@ -107,7 +107,7 @@ RSpec.describe "Hypotheses", type: :request do
         expect {
           patch hypothesis_path(other_hypothesis),
           params: valid_params
-        }.not_to change{ other_hypothesis.reload.content }
+        }.not_to change { other_hypothesis.reload.content }
 
         expect(response).to have_http_status(:not_found)
       end
@@ -127,7 +127,7 @@ RSpec.describe "Hypotheses", type: :request do
 
       it "仮説を削除してアプリ詳細画面にリダイレクトする" do
         target_hypothesis
-        expect{
+        expect {
           delete hypothesis_path(target_hypothesis)
         }.to change(Hypothesis, :count).by(-1)
 
@@ -140,7 +140,7 @@ RSpec.describe "Hypotheses", type: :request do
 
       it "他ユーザーの仮説は削除できない" do
         other_hypothesis
-        expect{
+        expect {
           delete hypothesis_path(other_hypothesis)
         }.not_to change(Hypothesis, :count)
 

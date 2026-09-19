@@ -43,7 +43,7 @@ RSpec.describe AdTest, type: :model do
 
     context "計測終了日が計測開始日より前の時" do
       it "無効になる" do
-        ad_test = build(:ad_test, test_start_date: Date.new(2026,9,15), test_end_date: Date.new(2025,4,1))
+        ad_test = build(:ad_test, test_start_date: Date.new(2026, 9, 15), test_end_date: Date.new(2025, 4, 1))
         expect(ad_test).not_to be_valid
       end
     end

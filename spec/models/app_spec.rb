@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe App, type: :model do
-  let(:user) { create(:user)}
+  let(:user) { create(:user) }
 
   describe "バリデーション" do
     context "nameがからの時" do

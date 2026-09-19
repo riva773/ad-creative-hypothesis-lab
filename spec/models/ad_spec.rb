@@ -45,7 +45,7 @@ RSpec.describe Ad, type: :model do
 
     context "ファイル名がキャンペーン名_3桁の番号.mp4形式でない時" do
       it "無効になる" do
-        ad = build(:ad, file_name: "test.mp4" )
+        ad = build(:ad, file_name: "test.mp4")
         expect(ad).not_to be_valid
       end
     end
