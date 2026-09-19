@@ -81,7 +81,7 @@ gem "tailwindcss-rails", "~> 4.6"
 
 gem "devise", "~> 5.0"
 
-gem "json", "< 3"
+gem "json", "< 4"
 
 gem "rails-i18n", ">= 8.1"
 
