@@ -24,8 +24,10 @@ development:
   <<: *default
   database: myapp_development
   host: db
+<% unless ENV.fetch("RAILS_ENV", "development") == "production" %>
   username: <%= File.read("/run/secrets/db_user").strip %>
   password: <%= File.read("/run/secrets/db_password").strip %>
+<% end %>
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
@@ -61,8 +63,10 @@ test:
   <<: *default
   database: myapp_test
   host: db
+<% unless ENV.fetch("RAILS_ENV", "development") == "production" %>
   username: <%= File.read("/run/secrets/db_user").strip %>
   password: <%= File.read("/run/secrets/db_password").strip %>
+<% end %>
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
