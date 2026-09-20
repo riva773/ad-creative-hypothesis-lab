@@ -17,8 +17,9 @@ class ReviewsController < ApplicationController
         @review.ad_test.update!(status: "振り返り済み")
       end
       redirect_to app_path(@app), status: :see_other, notice: "振り返りを作成しました。"
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid => error
       load_app_show_data
+      flash.now[:alert] = error.record.errors.full_messages.to_sentence
       render "apps/show", status: :unprocessable_entity
     end
   end
@@ -30,6 +31,7 @@ class ReviewsController < ApplicationController
       redirect_to app_path(@app), status: :see_other
     else
       load_app_show_data
+      flash.now[:alert] = @review.errors.full_messages.to_sentence
       render "apps/show", status: :unprocessable_entity
     end
   end

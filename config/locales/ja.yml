@@ -14,6 +14,7 @@ ja:
         content: "仮説内容"
       ad:
         creative: "ファイル"
+        file_name: "動画ファイル名"
       ad_test:
         test_start_date: "テスト開始日"
         test_end_date: "テスト終了日"

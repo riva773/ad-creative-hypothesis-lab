@@ -15,8 +15,9 @@ class AdsController < ApplicationController
         @ad.ad_tests.create!(status: "テスト結果待ち")
       end
         redirect_to @app, status: :see_other, notice: "広告をアップロードしました。"
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid => error
       load_app_show_data
+      flash.now[:alert] = error.record.errors.full_messages.to_sentence
       render "apps/show", status: :unprocessable_entity
     end
   end

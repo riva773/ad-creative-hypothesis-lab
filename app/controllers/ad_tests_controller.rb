@@ -100,6 +100,7 @@ class AdTestsController < ApplicationController
       redirect_to @app, status: :see_other, notice: "テスト結果を更新しました。"
     else
       load_app_show_data
+      flash.now[:alert] = @ad_test.errors.full_messages.to_sentence
       render "apps/show", status: :unprocessable_entity
     end
   end
