@@ -22,6 +22,7 @@ class HypothesesController < ApplicationController
       redirect_to app_path(@app), status: :see_other, notice: "仮説を更新しました。"
     else
       load_app_show_data
+      flash.now[:alert] = @hypothesis.errors.full_messages.to_sentence
       render "apps/show", status: :unprocessable_entity
     end
   end
