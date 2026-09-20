@@ -108,11 +108,12 @@ class AdTestsController < ApplicationController
   def destroy
     @ad_test = current_user.ad_tests.find(params[:id])
     @app = @ad_test.ad.app
+    @ad = @ad_test.ad
 
-    if @ad_test.destroy
-      redirect_to @app, status: :see_other, notice: "テスト結果を削除しました。"
+    if @ad.destroy
+      redirect_to @app, status: :see_other, notice: "広告とテスト結果を削除しました。"
     else
-      redirect_to @app, status: :see_other, alert: "テスト結果を削除できませんでした。"
+      redirect_to @app, status: :see_other, alert: "広告とテスト結果を削除できませんでした。"
     end
   end
 
