@@ -88,7 +88,7 @@
               <td class="whitespace-nowrap px-3 py-4 text-right font-semibold tabular-nums text-slate-900"><%= test.ctr.present? ? "#{test.ctr}%" : "ー" %></td>
               <td class="whitespace-nowrap px-3 py-4 text-right font-semibold tabular-nums text-slate-900"><%= test.cvr.present? ? "#{test.cvr}%" : "ー" %></td>
               <td class="max-w-56 whitespace-normal break-words px-3 py-4 align-middle text-slate-700"><%= test.ad.hypothesis&.content || "ー" %></td>
-              <td class="group relative max-w-56 whitespace-pre-line break-words px-3 py-4 text-blue-700 transition hover:text-blue-800 hover:underline hover:underline-offset-4"><button type="button" class="cursor-pointer"><%= test.review.present? ? test.review.content : "ー" %></button>
+              <td class="group relative max-w-56 whitespace-pre-line break-words px-3 py-4 transition hover:text-blue-800 hover:underline hover:underline-offset-4"><button type="button" class="cursor-pointer text-left"><%= test.review.present? ? test.review.content : "ー" %></button>
                 <%
                   start_date = test.test_start_date.present? ? l(test.test_start_date, format: :default) : "ー"
                   end_date = test.test_end_date.present? ? l(test.test_end_date, format: :default) : "ー"
