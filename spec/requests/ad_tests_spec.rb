@@ -201,10 +201,11 @@ RSpec.describe "AdTests", type: :request do
         target_ad_test
       end
 
-      it "AdTestを削除してアプリ詳細画面にリダイレクトする" do
+      it "広告と紐づくAdTestを削除してアプリ詳細画面にリダイレクトする" do
         expect {
           delete ad_test_path(target_ad_test)
-        }.to change(AdTest, :count).by(-1)
+        }.to change(Ad, :count).by(-1)
+        .and change(AdTest, :count).by(-1)
 
         expect(response).to redirect_to(app_path(target_app))
       end
