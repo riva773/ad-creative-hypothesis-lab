@@ -37,13 +37,7 @@
 
 ## 動作確認用ユーザー
 
-動作確認用に以下のユーザーを作成済みです。
-機能確認の際はこちらをご利用ください。
-
-```text
-  メールアドレス: demo_user@example.com
-  パスワード: password
-```
+welcomeページで、ゲストログインを選択してください。
 
 ## 主な機能
 
@@ -142,7 +136,7 @@ docker compose exec web bin/rails db:seed
 パスワード: password
 ```
 
-公開環境では、トップページから会員登録して利用できます。
+公開環境では、トップページからゲストログインして利用できます。
 
 広告動画アップロード時は、「sample/sample_video.mp4」を「アプリのキャンペーン名_3桁の数字.mp4」というファイル名に変更して登録してください。
 csv読み込みは「sample/sample_ad_tests.csv」または「sample/sample_ad_tests_10.csv」のいずれかのAd set Name列をアップロードした動画ファイル名と同じ「アプリのキャンペーン名_3桁の数字.mp4」に変更してからインポートしてください。
