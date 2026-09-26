@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       as: :user_registration
     post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
   end
+  authenticated :user do
+    root "apps#index", as: :authenticated_root
+  end
   root "welcome#index"
   resources :apps, except: [ :new ]
   resources :hypotheses, only: [ :create, :edit, :update, :destroy ]
