@@ -26,7 +26,6 @@ class AdTest < ApplicationRecord
     status == "結果取り込み済み" || status == "振り返り済み"
   end
 
-
   def test_end_date_must_be_after_test_start_date
     return if test_start_date.blank? || test_end_date.blank?
     if test_end_date < test_start_date
