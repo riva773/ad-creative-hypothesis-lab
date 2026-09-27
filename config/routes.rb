@@ -20,5 +20,4 @@ Rails.application.routes.draw do
   resources :reviews, only: [ :create, :update ]
   get "ad_tests/results", to: "ad_tests#results"
   get "up" => "rails/health#show", as: :rails_health_check
-
 end
