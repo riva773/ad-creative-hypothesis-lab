@@ -9,7 +9,7 @@
         <h2 class="mt-1 text-xl font-bold text-slate-900">アプリ一覧</h2>
       <div class="flex w-full gap-3 flex-row">
         <%= form_with model: @app, method: :get, class: "flex w-full flex-wrap items-center gap-2 sm:w-auto" do |f| %>
-          <%= f.text_field :search, placeholder: "アプリ名を検索", class: "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 sm:w-64" %>
+          <%= f.text_field :search, placeholder: "アプリ名を検索", class: "w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 sm:w-64", value: params.dig(:app, :search) %>
           <%= f.submit "検索", class: "cursor-pointer rounded-xl bg-blue-700 px-4 py-2.5 text-sm font-bold text-white transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-100" %>
           <%= link_to "リセット", apps_path, class: "rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-center text-sm font-bold text-slate-600 transition hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900" %>
         <% end %>

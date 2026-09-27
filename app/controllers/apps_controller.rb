@@ -25,7 +25,7 @@ class AppsController < ApplicationController
     if @new_app.save
       redirect_to apps_path, status: :see_other, notice: "アプリを作成しました。"
     else
-      @apps = App.all.includes(avatar_attachment: :blob)
+      @apps = App.includes(avatar_attachment: :blob).order(:id)
       @app = App.new
       flash.now[:alert] = @new_app.errors.full_messages.join("、")
       render :index, status: :unprocessable_entity
@@ -50,6 +50,9 @@ class AppsController < ApplicationController
     if @app.destroy
       redirect_to apps_path, notice: "アプリを削除しました。"
     else
+      @apps = App.includes(avatar_attachment: :blob).order(:id)
+      @new_app = App.new
+      @app = App.new
       render :index, status: :unprocessable_entity
     end
   end
