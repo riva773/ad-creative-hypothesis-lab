@@ -153,16 +153,21 @@
                       </div>
                     </div>
 
-                    <% review = test.review || test.build_review(user: current_user)   %>
-                    <%= form_with model: review, class: "mt-5 space-y-4 border-t border-sky-100 pt-5" do |f| %>
-                      <%= f.hidden_field :ad_test_id, value: "#{test.id}" %>
-                      <div>
-                        <%= f.label :content, "振り返り", class: "block text-sm font-semibold text-slate-700" %>
-                        <%= f.text_area :content, rows: 4, placeholder: "結果から分かったこと、次回に活かすことを入力してください", class: "mt-2 w-full resize-y rounded-xl border border-sky-300 px-4 py-3 text-sm leading-6 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-4 focus:ring-sky-100" %>
-                      </div>
-                      <div class="flex justify-end">
-                        <%= f.submit "振り返りを保存", class: "cursor-pointer rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-sky-100" %>
-                      </div>
+                    <% if test.ad.user == current_user && ( test.review.present? || test.status == "結果取り込み済み") %>
+                      <% review = test.review || test.build_review(user: current_user)   %>
+                      <%= form_with model: review, class: "mt-5 space-y-4 border-t border-sky-100 pt-5" do |f| %>
+                        <%= f.hidden_field :ad_test_id, value: "#{test.id}" %>
+                        <div>
+                          <%= f.label :content, "振り返り", class: "block text-sm font-semibold text-slate-700" %>
+                          <%= f.text_area :content, rows: 4, placeholder: "結果から分かったこと、次回に活かすことを入力してください", class: "mt-2 w-full resize-y rounded-xl border border-sky-300 px-4 py-3 text-sm leading-6 text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-4 focus:ring-sky-100" %>
+                        </div>
+                        <div class="flex justify-end">
+                          <%= f.submit "振り返りを保存", class: "cursor-pointer rounded-xl bg-blue-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-sky-100" %>
+                        </div>
+                      <% end %>
+                    <% elsif test.ad.user != current_user && ( test.review.present?)  %>
+                      <p class="mt-2 block text-sm font-semibold text-slate-700">振り返り</p>
+                      <p class="w-full rounded-xl border border-sky-300 px-4 py-3 text-sm leading-6 text-slate-700 outline-none transition placeholder:text-slate-400 whitespace-pre-wrap"><%= test.review.content %></p>
                     <% end %>
                   </div>
                 </div>
