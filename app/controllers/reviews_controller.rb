@@ -28,7 +28,7 @@ class ReviewsController < ApplicationController
     @review = current_user.reviews.find(params[:id])
     @app = @review.ad_test.ad.app
     if @review.update(update_review_params)
-      redirect_to app_path(@app), status: :see_other
+      redirect_to app_path(@app), status: :see_other, notice: "振り返りを更新しました。"
     else
       load_app_show_data
       flash.now[:alert] = @review.errors.full_messages.to_sentence

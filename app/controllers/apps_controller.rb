@@ -48,7 +48,7 @@ class AppsController < ApplicationController
   def destroy
     @app = current_user.apps.find(params[:id])
     if @app.destroy
-      redirect_to apps_path, notice: "アプリを削除しました。"
+      redirect_to apps_path, status: :see_other, notice: "アプリを削除しました。"
     else
       @apps = App.includes(avatar_attachment: :blob).order(:id)
       @new_app = App.new
