@@ -37,5 +37,14 @@ class ApplicationController < ActionController::Base
       hypothesis.ad.blank?
     end
     @new_app ||= App.new
+    @network = params[:network_id].to_i
+    case @network
+    when 1 then
+      @ad_tests = @ad_tests.where(network: "Meta")
+    when 2 then
+      @ad_tests = @ad_tests.where(network: "Google")
+    when 3 then
+      @ad_tests = @ad_tests.where(network: "AppLovin")
+    end
   end
 end
